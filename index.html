@@ -1412,8 +1412,6 @@ function renderTodoList(){
     </div>`;
   }).join('');
 }
-  renderTodoMain();
-  const active=todos.filter(t=>!t.done).length;const b=document.getElementById("todo-subtab-badge");if(b){b.textContent=active;b.style.display=active>0?"inline":"none";}
 
 function addTodoFromInput(){
   const inp=document.getElementById('todo-input-field');
@@ -1550,6 +1548,7 @@ function isTodoCmd(text){
 }
 
 let isXavListening=false;
+let isMicListen=false;
 function toggleXavierVoice(){
   if(synth&&synth.speaking){synth.cancel();setVS('idle');return;}
   if(isXavListening){if(recognition)recognition.stop();return;}
@@ -1561,7 +1560,7 @@ function toggleXavierVoice(){
       addTodo(todoMatch,'daily');
       const r=`Got it! Added "${todoMatch}" to your to-do list!`;
       addMsg(r,false);speak(r);
-      if(!isTodoPanelOpen)openTodoPanel();
+      renderTodoMain();
     }else{
       // Smart local responses for common questions — no API needed
       const reply=smartReply(t);
