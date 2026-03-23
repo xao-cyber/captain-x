@@ -572,10 +572,8 @@ let weekOffset=0,recognition=null,isXavListen=false,isMicListen=false;
 let editingId=null,pendingDeleteId=null,detailActivityId=null;
 const synth=window.speechSynthesis;
 
-// ── JSONBin cloud storage ──
-const BIN_ID="69c090d7c3097a1dd54d74cc";
-const MASTER_KEY="$2a$10$1M4gDgd59r6g84QOnW77gOKQV9GZJMrraqay/HCA.iEd01fbPBS3O";
-const BIN_URL="https://api.jsonbin.io/v3/b/"+BIN_ID;
+// ── Firebase Realtime Database ──
+const FIREBASE_URL="https://captain-x-b5e43-default-rtdb.firebaseio.com";
 const EDIT_PASSWORD="captainx2025";
 let isEditor=false;
 let isSyncing=false;
@@ -585,42 +583,26 @@ function setIndicator(msg){
   if(el) el.textContent=msg;
 }
 
-async function makePublic(){
-  try{
-    await fetch("https://api.jsonbin.io/v3/b/"+BIN_ID+"/meta/privacy",{
-      method:'PUT',
-      mode:'cors',
-      headers:{'X-Master-Key':MASTER_KEY,'X-Bin-Private':'false','Content-Type':'application/json'},
-      body:'{}'
-    });
-  }catch(e){console.log('makePublic:',e);}
-}
-
 async function saveData(){
   if(!isEditor) return;
   if(isSyncing) return;
   isSyncing=true;
   setIndicator("Xavier's mission control · Saving...");
   try{
-    const res=await fetch(BIN_URL,{
+    const res=await fetch(FIREBASE_URL+"/captainx.json",{
       method:'PUT',
-      mode:'cors',
-      headers:{
-        'Content-Type':'application/json',
-        'X-Master-Key':MASTER_KEY,
-        'X-Bin-Versioning':'false'
-      },
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({activities,todos,customTypes})
     });
     if(res.ok){
       setIndicator("Xavier's mission control · Saved ✓");
     }else{
       const txt=await res.text();
-      console.error('Save error:',res.status,txt);
-      setIndicator("Xavier's mission control · Save failed ("+res.status+")");
+      console.error('Firebase save error:',res.status,txt);
+      setIndicator("Xavier's mission control · Save failed");
     }
   }catch(e){
-    console.error('Save exception:',e);
+    console.error('Firebase save exception:',e);
     setIndicator("Xavier's mission control · Offline");
   }
   isSyncing=false;
@@ -629,25 +611,25 @@ async function saveData(){
 async function loadData(){
   setIndicator("Xavier's mission control · Loading...");
   try{
-    const res=await fetch(BIN_URL+'/latest',{
-      mode:'cors',
-      headers:{'X-Master-Key':MASTER_KEY,'X-Bin-Meta':'false'}
-    });
+    const res=await fetch(FIREBASE_URL+"/captainx.json");
     if(res.ok){
-      const json=await res.json();
-      const d=json.record||{};
-      activities=Array.isArray(d.activities)&&d.activities.length?d.activities:[...DEFAULT_ACTIVITIES];
-      todos=Array.isArray(d.todos)?d.todos:[];
-      customTypes=Array.isArray(d.customTypes)?d.customTypes:[];
-      setIndicator("Xavier's mission control · Loaded ✓");
+      const d=await res.json();
+      if(d&&d.activities){
+        activities=Array.isArray(d.activities)&&d.activities.length?d.activities:[...DEFAULT_ACTIVITIES];
+        todos=Array.isArray(d.todos)?d.todos:[];
+        customTypes=Array.isArray(d.customTypes)?d.customTypes:[];
+        setIndicator("Xavier's mission control · Loaded ✓");
+      }else{
+        activities=[...DEFAULT_ACTIVITIES];
+        setIndicator("Xavier's mission control · Ready ✓");
+      }
     }else{
-      const txt=await res.text();
-      console.error('Load error:',res.status,txt);
+      console.error('Firebase load error:',res.status);
       activities=[...DEFAULT_ACTIVITIES];
-      setIndicator("Xavier's mission control · Using defaults ("+res.status+")");
+      setIndicator("Xavier's mission control · Using defaults");
     }
   }catch(e){
-    console.error('Load exception:',e);
+    console.error('Firebase load exception:',e);
     activities=[...DEFAULT_ACTIVITIES];
     setIndicator("Xavier's mission control · Offline mode");
   }
@@ -659,22 +641,7 @@ function checkEditor(){
   updateEditMode();
 }
 
-async function testConnection(){
-  try{
-    const res=await fetch(BIN_URL+'/latest',{
-      mode:'cors',
-      headers:{'X-Master-Key':MASTER_KEY}
-    });
-    const txt=await res.text();
-    console.log('JSONBin test - status:',res.status,'body:',txt.slice(0,200));
-    if(res.status===401) showToast('API key rejected by JSONBin — check key');
-    else if(res.status===404) showToast('Bin not found — check Bin ID');
-    else if(res.ok) console.log('JSONBin connection OK');
-    else showToast('JSONBin error: '+res.status);
-  }catch(e){
-    console.error('JSONBin connection error:',e);
-  }
-}
+
 
 function updateEditMode(){
   const lockBtn=document.getElementById('lock-btn');
@@ -1169,30 +1136,27 @@ async function init(){
   buildTypeGrid('hockey');buildColorRow();selectWho('xavier');
   renderToday();renderTodos();
   checkEditor();
-  makePublic();
-  testConnection();
-  if(synth){synth.getVoices();synth.onvoiceschanged=()=>synth.getVoices();}
+    if(synth){synth.getVoices();synth.onvoiceschanged=()=>synth.getVoices();}
   // Auto-refresh every 30 seconds so all viewers stay in sync
   setInterval(async()=>{
     if(!isSyncing){
       try{
-        const res=await fetch(BIN_URL+'/latest',{mode:'cors',headers:{'X-Master-Key':MASTER_KEY,'X-Bin-Meta':'false'}});
+        const res=await fetch(FIREBASE_URL+"/captainx.json");
         if(res.ok){
-          const json=await res.json();
-          const d=json.record||{};
-          if(d.activities&&JSON.stringify(d.activities)!==JSON.stringify(activities)){
+          const d=await res.json();
+          if(d&&d.activities&&JSON.stringify(d.activities)!==JSON.stringify(activities)){
             activities=d.activities;
-            todos=d.todos||[];
-            customTypes=d.customTypes||[];
+            todos=Array.isArray(d.todos)?d.todos:[];
+            customTypes=Array.isArray(d.customTypes)?d.customTypes:[];
             renderToday();
             renderTodos();
             if(document.getElementById('tab-week').classList.contains('active')) renderWeek();
-            showToast('Schedule updated!');
+            showToast('Schedule updated! 🔄');
           }
         }
       }catch(e){}
     }
-  },30000);
+  },15000);
 }
 init();
 </script>
