@@ -1135,9 +1135,22 @@ function checkEditor(){
 }
 function updateEditMode(){
   const lb=document.getElementById('lock-btn');
-  if(lb){lb.textContent=isEditor?'🔓 Editing':'🔒 View only';lb.className=isEditor?'hbtn unlocked':'hbtn locked';}
+  if(lb){
+    lb.textContent=isEditor?'🔓 Editing':'🔒 View only';
+    lb.style.background=isEditor?'#5B8DB8':'';
+    lb.style.color=isEditor?'white':'';
+    lb.style.borderColor=isEditor?'#5B8DB8':'';
+  }
+  // Show/hide FAB
+  const fab=document.getElementById('add-fab-btn');
+  if(fab) fab.style.display=isEditor?'flex':'none';
+  // Show/hide edit buttons in summary
   document.querySelectorAll('.sa-btn').forEach(el=>el.style.display=isEditor?'flex':'none');
-  document.querySelectorAll('.sa-btn').forEach(el=>el.style.display=isEditor?'flex':'none');
+  // Show/hide todo add button
+  const todoAdd=document.querySelector('.todo-add-btn');
+  if(todoAdd) todoAdd.style.display=isEditor?'':'none';
+  // Show/hide alert done circles
+  document.querySelectorAll('.alert-done').forEach(el=>el.style.display=isEditor?'flex':'none');
 }
 function promptPassword(){
   if(isEditor){isEditor=false;sessionStorage.removeItem('cx_editor');updateEditMode();showToast('Switched to view only');return;}
@@ -1372,7 +1385,7 @@ function switchTodoTab(tab){
     document.getElementById('ttab-'+t).className='todo-tab'+(t===tab?' active':'');
   });
   document.getElementById('todo-add-row').style.display=tab==='done'?'none':'flex';
-  renderTodoList();
+  renderTodoMain();
 }
 function renderTodoList(){
   const list=document.getElementById('todo-items-list');
@@ -1739,7 +1752,6 @@ async function init(){
   buildTypeGrid('hockey');buildColorRow();
   checkEditor();
   renderToday();
-  renderTodoList();
   showShareUrl();
   startAutoSync();
   if(synth){synth.getVoices();synth.onvoiceschanged=()=>synth.getVoices();}
