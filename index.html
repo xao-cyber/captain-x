@@ -6,9 +6,10 @@
 <title>Captain X — Xavier's Schedule</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
 <style>
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#EBF4FF;--surface:#fff;--surface2:#DCE9F8;
+  --bg:#FFFFFF;--surface:#fff;--surface2:#DCE9F8;
   --border:#CCE0F0;--border-strong:#A8C8E8;
   --text:#1A3A5C;--text-2:#4A6A88;--text-3:#7A9AB5;
   --purple:#5B8DB8;--purple-bg:#DCE9F8;--purple-light:#EBF4FF;
@@ -317,7 +318,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 /* ── TODO SUB PANEL FIX ── */
 .todo-sub-panel{background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--border)}
-.todo-sub-header{padding:10px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#EBF4FF}
+.todo-sub-header{padding:10px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#FFFFFF}
 .todo-sub-tabs{display:flex;gap:4px}
 .todo-sub-tab{padding:5px 10px;border-radius:7px;border:1.5px solid var(--border);background:none;font-size:11px;font-weight:800;color:var(--text-2);cursor:pointer;font-family:inherit}
 .todo-sub-tab.active{background:#5B9DC8;color:white;border-color:#5B8DB8}
@@ -333,6 +334,390 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .todo-del-btn:hover{color:var(--red)}
 .todo-empty-msg{padding:20px 14px;font-size:12px;color:var(--text-3);text-align:center;font-weight:600}
 .todo-add-voice-hint{padding:4px 14px 12px;font-size:10px;color:var(--text-3);text-align:center;font-style:italic}
+
+
+/* ━━━ LAYOUT RESET ━━━ */
+body { background: #FFFFFF; }
+.app { max-width: 1200px; margin: 0 auto; padding: 0 16px 60px; }
+
+/* 3-column grid: 3/5 | 1/5 | 1/5 */
+.main-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+/* ━━━ HERO ━━━ */
+.hero-card {
+  background: #FFFFFF;
+  border: 1.5px solid #C8DFF0;
+  border-radius: 16px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.hero-left {}
+.hero-day-lbl {
+  font-size: 11px; font-weight: 700; color: #5A7FA8;
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px;
+}
+.hero-date-txt {
+  font-family: 'Baloo 2', system-ui, sans-serif;
+  font-size: 30px; font-weight: 800; color: #1A2433;
+  letter-spacing: -.5px; line-height: 1.1; margin-bottom: 10px;
+}
+.hero-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.hero-pill {
+  background: rgba(91,141,184,.15); border-radius: 6px;
+  padding: 3px 10px; font-size: 11px; font-weight: 700; color: #1A2433;
+}
+.hero-emoji { font-size: 56px; line-height: 1; opacity: .85; }
+
+/* ━━━ SCHEDULE SECTION ━━━ */
+.section-card {
+  background: white;
+  border: 1px solid #D8E8F4;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.section-hdr {
+  padding: 10px 14px;
+  border-bottom: 1px solid #EAF2FA;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #F8F9FA;
+}
+.section-title { font-size: 12px; font-weight: 800; color: #1A2433; }
+.section-badge {
+  font-size: 10px; font-weight: 800; color: white;
+  background: #5B8DB8; padding: 1px 8px; border-radius: 99px;
+}
+
+/* Event cards */
+.ev-card {
+  padding: 11px 14px;
+  border-bottom: 1px solid #F0F6FF;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer; transition: background .12s;
+}
+.ev-card:last-child { border-bottom: none; }
+.ev-card:hover { background: #F8F9FA; }
+.ev-time-col { text-align: right; min-width: 52px; flex-shrink: 0; }
+.ev-time-start { font-size: 12px; font-weight: 800; }
+.ev-time-sep { font-size: 9px; color: #8BA5BF; }
+.ev-time-end { font-size: 10px; color: #5A7090; font-weight: 600; }
+.ev-dot { width: 4px; min-height: 42px; border-radius: 2px; flex-shrink: 0; }
+.ev-icon-box {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.ev-info { flex: 1; min-width: 0; }
+.ev-name { font-size: 13px; font-weight: 800; margin-bottom: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ev-loc { font-size: 11px; color: #5A7090; font-weight: 600; }
+.ev-pills { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.ev-pill { font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 99px; }
+.ev-gear-row { font-size: 10px; font-weight: 700; margin-top: 5px; }
+.ev-cost { font-size: 11px; font-weight: 800; color: #00A870; flex-shrink: 0; margin-left: 4px; }
+
+/* Tomorrow strip */
+.tomorrow-hdr { font-size: 10px; font-weight: 800; color: #8BA5BF; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; }
+.tom-pills { display: flex; gap: 5px; flex-wrap: wrap; }
+.tom-pill { padding: 4px 10px; border-radius: 99px; font-size: 10px; font-weight: 700; color: white; }
+
+/* ━━━ TODO ━━━ */
+.todo-hdr-row {
+  padding: 10px 14px;
+  border-bottom: 1px solid #EAF2FA;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #F8F9FA;
+}
+.todo-title-row { display: flex; align-items: center; gap: 6px; }
+.todo-title { font-size: 12px; font-weight: 800; color: #1A2433; }
+.todo-badge {
+  background: #5B8DB8; color: white;
+  font-size: 10px; font-weight: 800;
+  padding: 1px 7px; border-radius: 99px; display: none;
+}
+.todo-filter-row { display: flex; gap: 4px; align-items: center; }
+.tfilt {
+  padding: 4px 9px; border-radius: 7px;
+  border: 1px solid #D8E8F4; background: none;
+  font-size: 10px; font-weight: 800; color: #5A7090;
+  cursor: pointer; font-family: inherit;
+}
+.tfilt.active { background: #5B8DB8; color: white; border-color: #5B8DB8; }
+.todo-add-btn {
+  background: #5B8DB8; color: white; border: none;
+  border-radius: 7px; padding: 4px 10px;
+  font-size: 10px; font-weight: 800; cursor: pointer; font-family: inherit;
+}
+.todo-item {
+  padding: 9px 14px; border-bottom: 1px solid #F0F6FF;
+  display: flex; align-items: center; gap: 8px;
+}
+.todo-item:last-child { border-bottom: none; }
+.todo-chk {
+  width: 18px; height: 18px; border: 2px solid #C8DFF0;
+  border-radius: 5px; flex-shrink: 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; color: white; transition: all .15s;
+}
+.todo-chk.done { background: #00B894; border-color: #00B894; }
+.todo-txt { font-size: 12px; font-weight: 700; flex: 1; color: #1A2433; }
+.todo-txt.done { text-decoration: line-through; color: #8BA5BF; }
+.todo-who { font-size: 9px; padding: 2px 6px; border-radius: 99px; font-weight: 800; flex-shrink: 0; }
+.tw-x { background: #E4EEF8; color: #5B8DB8; }
+.tw-p { background: #F5F1EB; color: #7A6B55; }
+.todo-del { background: none; border: none; color: #C8DFF0; cursor: pointer; font-size: 14px; flex-shrink: 0; }
+.todo-del:hover { color: #D63031; }
+.todo-empty { padding: 18px 14px; font-size: 12px; color: #8BA5BF; text-align: center; font-weight: 600; }
+
+/* ━━━ RIGHT SIDEBAR SHARED ━━━ */
+.side-card {
+  background: white; border: 1px solid #D8E8F4;
+  border-radius: 14px; overflow: hidden; margin-bottom: 12px;
+}
+.side-hdr {
+  padding: 10px 12px; border-bottom: 1px solid #EAF2FA;
+  background: #F8F9FA; display: flex; align-items: center; gap: 6px;
+}
+.side-title { font-size: 11px; font-weight: 800; color: #1A2433; flex: 1; }
+.side-badge {
+  font-size: 9px; font-weight: 800; color: white;
+  background: #5B8DB8; padding: 1px 6px; border-radius: 99px;
+}
+
+/* ━━━ AI CHAT ━━━ */
+.ai-avatar {
+  width: 24px; height: 24px; background: #5B8DB8; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0;
+}
+.ai-msgs {
+  padding: 8px 10px; max-height: 140px; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.msg { padding: 6px 9px; border-radius: 10px; font-size: 11px; line-height: 1.5; font-weight: 600; max-width: 90%; }
+.msg-ai { background: #FFFFFF; color: #1A2433; align-self: flex-start; }
+.msg-user { background: #1A2433; color: white; align-self: flex-end; }
+.ai-sugs { padding: 4px 8px 8px; display: flex; flex-direction: column; gap: 3px; }
+.sug-btn {
+  background: #F8F9FA; border: 1px solid #D8E8F4; border-radius: 7px;
+  padding: 5px 8px; font-size: 10px; color: #5A7090; text-align: left;
+  cursor: pointer; font-family: inherit; font-weight: 700;
+}
+.sug-btn:hover { border-color: #5B8DB8; color: #5B8DB8; }
+.ai-input-row {
+  padding: 6px 8px; border-top: 1px solid #EAF2FA;
+  display: flex; gap: 5px; align-items: center;
+}
+.ai-inp {
+  flex: 1; background: #FFFFFF; border: 1px solid #D8E8F4;
+  border-radius: 7px; padding: 6px 9px; font-size: 11px;
+  font-family: inherit; color: #1A2433; outline: none;
+}
+.ai-inp:focus { border-color: #5B8DB8; }
+.ai-send {
+  width: 28px; height: 28px; background: #5B8DB8; border: none;
+  border-radius: 7px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ai-send svg { width: 12px; height: 12px; fill: white; }
+.mic-btn {
+  width: 28px; height: 28px; background: #FFFFFF; border: 1px solid #D8E8F4;
+  border-radius: 7px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+}
+.mic-btn svg { width: 12px; height: 12px; fill: #5A7090; }
+.mic-btn.listening { background: #FF3B30; border-color: #FF3B30; }
+.mic-btn.listening svg { fill: white; }
+.typing-dots { display: flex; gap: 3px; align-items: center; padding: 2px 0; }
+.typing-dots span { width: 5px; height: 5px; background: #5B8DB8; border-radius: 50%; animation: bounce 1.2s infinite; }
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes bounce { 0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)} }
+
+/* Voice button in AI panel */
+.voice-mini {
+  width: 100%; padding: 9px 12px; background: #FFFFFF;
+  border: 1px solid #C8DFF0; border-radius: 10px; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  font-family: inherit; transition: all .15s; margin-bottom: 8px;
+}
+.voice-mini:hover { background: #DCE9F8; }
+.voice-mini.listening { background: #FEF0F0; border-color: #FF3B30; }
+.voice-mini.speaking { background: #FFFFFF; border-color: #5B8DB8; }
+.vm-orb {
+  width: 30px; height: 30px; background: #5B8DB8; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px;
+}
+.vm-main { font-size: 11px; font-weight: 800; color: #1A2433; }
+.vm-sub { font-size: 9px; color: #5A7090; font-weight: 600; margin-top: 1px; }
+
+/* ━━━ PREP REMINDERS ━━━ */
+.alert-row {
+  padding: 8px 12px; border-bottom: 1px solid #F0F6FF;
+  display: flex; align-items: center; gap: 8px;
+}
+.alert-row:last-child { border-bottom: none; }
+.alert-icon-box {
+  width: 26px; height: 26px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0;
+}
+.alert-title { font-size: 11px; font-weight: 800; color: #1A2433; }
+.alert-sub { font-size: 9px; color: #8BA5BF; font-weight: 600; margin-top: 1px; }
+.check-circle {
+  width: 18px; height: 18px; border: 2px solid #C8DFF0; border-radius: 50%;
+  flex-shrink: 0; cursor: pointer; transition: all .15s;
+  display: flex; align-items: center; justify-content: center; font-size: 10px;
+}
+.check-circle.done { background: #00B894; border-color: #00B894; color: white; }
+
+/* ━━━ SUMMARY LIST ━━━ */
+.summary-row {
+  padding: 8px 12px; border-bottom: 1px solid #F0F6FF;
+  display: flex; align-items: flex-start; gap: 8px; transition: background .1s;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-row:hover { background: #F8F9FA; }
+.sum-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.sum-info { flex: 1; min-width: 0; }
+.sum-name { font-size: 11px; font-weight: 800; color: #1A2433; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sum-meta { font-size: 9px; color: #8BA5BF; font-weight: 600; margin-top: 1px; }
+.sum-cost { font-size: 9px; color: #00A870; font-weight: 800; margin-top: 1px; }
+.sa-btn {
+  width: 22px; height: 22px; border: 1px solid #D8E8F4; border-radius: 6px;
+  background: none; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 10px; flex-shrink: 0;
+}
+.sa-btn:hover { background: #FFFFFF; }
+.sa-btn.del:hover { background: #FEF0F0; border-color: #FF3B30; }
+
+/* ━━━ COST PANEL ━━━ */
+.cost-total-row { padding: 10px 12px 6px; }
+.cost-total-lbl { font-size: 9px; font-weight: 800; color: #00A870; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+.cost-total-amt { font-size: 20px; font-weight: 800; color: #00A870; letter-spacing: -.5px; }
+.cost-total-sub { font-size: 10px; color: #00A870; opacity: .6; }
+.cost-row {
+  padding: 5px 12px; border-top: 1px solid #F0F6FF;
+  display: flex; align-items: center; gap: 6px;
+}
+.cost-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.cost-nm { flex: 1; font-size: 10px; font-weight: 700; color: #5A7090; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cost-pct { font-size: 9px; color: #8BA5BF; min-width: 26px; text-align: right; }
+.cost-amt { font-size: 10px; font-weight: 800; color: #1A2433; min-width: 36px; text-align: right; }
+.cost-empty { padding: 12px; font-size: 11px; color: #8BA5BF; text-align: center; font-weight: 600; font-style: italic; }
+
+/* ━━━ HEADER ━━━ */
+.header { padding: 18px 0 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon { width: 38px; height: 38px; background: #5B8DB8; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.logo h1 { font-family: 'Baloo 2', sans-serif; font-size: 22px; font-weight: 800; color: #1A2433; }
+.logo h1 span { color: #5B8DB8; }
+.logo p { font-size: 10px; color: #8BA5BF; font-weight: 600; margin-top: 1px; }
+.header-right { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.hbtn {
+  background: white; border: 1px solid #D8E8F4; border-radius: 9px;
+  padding: 7px 14px; font-size: 12px; font-weight: 700; color: #5A7090;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.hbtn:hover { border-color: #5B8DB8; color: #5B8DB8; }
+.hbtn.lock-on { background: #5B8DB8; color: white; border-color: #5B8DB8; }
+
+/* ━━━ TABS ━━━ */
+.tabs { display: flex; gap: 3px; background: white; border: 1px solid #D8E8F4; border-radius: 11px; padding: 3px; margin-bottom: 16px; width: fit-content; }
+.tab { padding: 7px 18px; border-radius: 8px; font-size: 12px; font-weight: 800; color: #8BA5BF; cursor: pointer; border: none; background: none; font-family: inherit; transition: all .18s; }
+.tab.active { background: #5B8DB8; color: white; }
+
+/* ━━━ WEEK VIEW ━━━ */
+.week-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.week-title { font-family: 'Baloo 2', sans-serif; font-size: 20px; font-weight: 800; color: #1A2433; }
+.week-title span { color: #5B8DB8; }
+.nav-arrows { display: flex; gap: 5px; }
+.arrow-btn { width: 32px; height: 32px; background: white; border: 1px solid #D8E8F4; border-radius: 9px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #5A7090; font-size: 16px; font-weight: 800; transition: all .15s; }
+.arrow-btn:hover { border-color: #5B8DB8; color: #5B8DB8; }
+.week-grid { display: grid; grid-template-columns: 48px repeat(7,1fr); background: #D8E8F4; border: 1px solid #D8E8F4; border-radius: 14px; overflow: hidden; }
+.week-col-hdr { background: white; padding: 9px 4px 7px; text-align: center; border-right: 1px solid #EAF2FA; }
+.week-col-hdr:last-child { border-right: none; }
+.wk-day-name { font-size: 9px; font-weight: 800; color: #8BA5BF; text-transform: uppercase; letter-spacing: .05em; }
+.wk-day-num { font-size: 16px; font-weight: 800; color: #1A2433; font-family: 'Baloo 2', sans-serif; margin-top: 1px; }
+.wk-day-num.today-num { background: #5B8DB8; color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 1px auto 0; font-size: 12px; }
+.time-col { background: white; border-right: 1px solid #EAF2FA; }
+.time-cell { height: 50px; display: flex; align-items: flex-start; justify-content: flex-end; padding: 3px 5px 0 0; font-size: 8px; color: #8BA5BF; border-bottom: 1px solid #EAF2FA; font-weight: 700; }
+.day-col { background: white; border-right: 1px solid #EAF2FA; position: relative; }
+.day-col:last-child { border-right: none; }
+.hour-row { height: 50px; border-bottom: 1px solid #EAF2FA; }
+.week-event { position: absolute; left: 2px; right: 2px; border-radius: 6px; padding: 2px 4px; font-size: 8px; font-weight: 800; overflow: hidden; cursor: pointer; z-index: 2; transition: opacity .12s; }
+.week-event:hover { opacity: .8; }
+.we-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.we-time { font-size: 7px; opacity: .8; }
+.week-legend { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #5A7090; font-weight: 700; }
+.legend-dot { width: 8px; height: 8px; border-radius: 3px; }
+
+/* ━━━ TOAST ━━━ */
+.voice-toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: rgba(26,36,51,.9); color: white; padding: 9px 18px; border-radius: 99px; font-size: 12px; font-weight: 700; pointer-events: none; opacity: 0; transition: opacity .25s; z-index: 300; white-space: nowrap; max-width: 90vw; font-family: inherit; }
+.voice-toast.show { opacity: 1; }
+
+/* ━━━ FAB ━━━ */
+.add-fab { position: fixed; bottom: 22px; right: 22px; background: #5B8DB8; color: white; border: none; border-radius: 14px; padding: 13px 20px; font-size: 13px; font-weight: 800; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 7px; box-shadow: 0 4px 16px rgba(91,141,184,.35); z-index: 100; transition: all .2s; }
+.add-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(91,141,184,.4); }
+
+/* ━━━ MODALS ━━━ */
+.modal-overlay { position: fixed; inset: 0; background: rgba(26,36,51,.45); display: flex; align-items: flex-start; justify-content: center; padding: 30px 16px 60px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity .2s; overflow-y: auto; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal { background: white; border-radius: 18px; padding: 22px; width: 500px; max-width: 100%; box-shadow: 0 20px 60px rgba(26,36,51,.18); }
+.modal-title { font-size: 18px; font-weight: 900; margin-bottom: 14px; color: #1A2433; font-family: 'Baloo 2', sans-serif; }
+.modal-title span { color: #5B8DB8; }
+.form-row { margin-bottom: 12px; }
+.form-label { font-size: 10px; font-weight: 800; color: #5A7090; margin-bottom: 5px; letter-spacing: .04em; text-transform: uppercase; display: block; }
+.form-input { width: 100%; border: 1.5px solid #D8E8F4; border-radius: 9px; padding: 8px 11px; font-size: 13px; font-family: inherit; color: #1A2433; background: #F8F9FA; outline: none; font-weight: 700; transition: border-color .15s; }
+.form-input:focus { border-color: #5B8DB8; background: white; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.modal-divider { height: 1px; background: #EAF2FA; margin: 12px 0; }
+.modal-actions { display: flex; gap: 8px; margin-top: 14px; }
+.btn-cancel { flex: 1; padding: 9px; border: 1.5px solid #D8E8F4; border-radius: 9px; background: none; font-size: 12px; font-weight: 800; color: #5A7090; cursor: pointer; font-family: inherit; }
+.btn-save { flex: 2; padding: 9px; background: #5B8DB8; color: white; border: none; border-radius: 9px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.btn-delete { flex: 1; padding: 9px; background: #FEF0F0; color: #D63031; border: 1.5px solid #FFB3B3; border-radius: 9px; font-size: 12px; font-weight: 800; cursor: pointer; font-family: inherit; }
+.type-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+.type-opt { border: 2px solid #D8E8F4; border-radius: 9px; padding: 8px 4px 7px; cursor: pointer; font-size: 10px; font-weight: 800; display: flex; flex-direction: column; align-items: center; gap: 3px; color: #5A7090; background: #F8F9FA; transition: all .15s; }
+.type-opt .t-emoji { font-size: 20px; line-height: 1.2; }
+.type-opt.sel { border-width: 2px; }
+.format-row { display: flex; gap: 6px; }
+.fmt-opt { flex: 1; border: 2px solid #D8E8F4; border-radius: 9px; padding: 7px 4px; cursor: pointer; font-size: 11px; font-weight: 800; text-align: center; color: #5A7090; transition: all .15s; background: #F8F9FA; }
+.fmt-opt.sel { border-color: #5B8DB8; background: #FFFFFF; color: #5B8DB8; }
+.recur-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.recur-opt { border: 2px solid #D8E8F4; border-radius: 9px; padding: 6px 12px; cursor: pointer; font-size: 11px; font-weight: 800; color: #5A7090; background: #F8F9FA; transition: all .15s; }
+.recur-opt.sel { border-color: #00B894; background: #E0FBF4; color: #00B894; }
+.date-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.date-fields.hidden { display: none; }
+.color-row { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 6px; }
+.cswatch { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all .15s; }
+.cswatch.sel { border-color: #1A2433; transform: scale(1.2); }
+.cost-input-wrap { position: relative; }
+.cost-input-wrap .currency { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #5A7090; pointer-events: none; font-weight: 800; }
+.cost-input-wrap .form-input { padding-left: 22px; }
+.cost-freq-note { font-size: 10px; color: #8BA5BF; margin-top: 3px; font-weight: 600; }
+.who-row { display: flex; gap: 8px; }
+.who-opt { flex: 1; border: 2px solid #D8E8F4; border-radius: 9px; padding: 8px; cursor: pointer; font-size: 12px; font-weight: 800; text-align: center; color: #5A7090; background: #F8F9FA; transition: all .15s; }
+.who-opt.sel-x { border-color: #5B8DB8; background: #FFFFFF; color: #5B8DB8; }
+.who-opt.sel-p { border-color: #7A6B55; background: #F5F1EB; color: #7A6B55; }
+.custom-box { background: #F8F9FA; border-radius: 9px; padding: 10px 12px; margin-top: 8px; border: 1.5px solid #D8E8F4; }
+.detail-modal { background: white; border-radius: 18px; padding: 22px; width: 400px; max-width: 100%; box-shadow: 0 20px 60px rgba(26,36,51,.18); }
+.confirm-modal { background: white; border-radius: 18px; padding: 22px; width: 340px; max-width: 100%; box-shadow: 0 20px 60px rgba(26,36,51,.18); }
+.todo-modal { background: white; border-radius: 18px; padding: 22px; width: 340px; max-width: 100%; box-shadow: 0 20px 60px rgba(26,36,51,.18); }
+
+@media(max-width: 900px) {
+  .main-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width: 600px) {
+  .main-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -341,16 +726,16 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   <!-- HEADER -->
   <div class="header">
     <div class="logo">
-      <div class="logo-icon" style="background:linear-gradient(135deg,#7AAFD4,#5B8DB8);box-shadow:0 4px 12px rgba(33,150,243,.3)">🦸</div>
-      <div class="logo-text">
+      <div class="logo-icon">🦸</div>
+      <div>
         <h1>Captain <span>X</span></h1>
         <p id="save-indicator">Xavier's mission control · Loading...</p>
       </div>
     </div>
     <div class="header-right">
-      <button class="hbtn" onclick="document.getElementById('share-overlay').classList.add('open')">🔗 Share</button>
+      <button class="hbtn" onclick="document.getElementById('share-overlay').classList.add('open');showShareUrl()">🔗 Share</button>
       <button class="hbtn" id="lock-btn" onclick="promptPassword()">🔒 View only</button>
-      <button class="hbtn" onclick="openModal()">＋ Add Activity</button>
+      <button class="hbtn" onclick="openModal()">+ Add Activity</button>
     </div>
   </div>
 
@@ -362,161 +747,161 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
   <!-- TODAY VIEW -->
   <div id="view-today">
-    <!-- Date Hero -->
-    <div class="date-hero">
-      <div class="date-hero-left">
-        <div class="date-hero-day" id="hero-day">Monday</div>
-        <div class="date-hero-date"><span id="hero-date">March 24</span></div>
-        <div class="date-hero-sub" id="hero-sub">Loading schedule...</div>
-      </div>
-      <div class="date-hero-right">
-        <div class="event-pill" id="hero-pill">0 activities</div>
-        <button class="voice-mini-btn" id="xavier-voice-btn" onclick="toggleXavierVoice()">
-          <span>🎙️</span>
-          <span id="v-label-main">Hey Xavier!</span>
-        </button>
-      </div>
-    </div>
+    <div class="main-grid">
 
-    <div class="today-layout">
-      <!-- Events -->
-      <div class="events-col">
-        <!-- Sub-tabs: Schedule | To-Do -->
-        <!-- Schedule panel - always visible -->
-        <div id="subview-schedule">
-          <div class="events-list" id="today-events"></div>
-          <div class="tomorrow-card" style="background:white;border-radius:16px;border:2px solid #D6E4F5;padding:12px 16px;margin-bottom:14px">
-            <div class="tomorrow-label">Tomorrow</div>
+      <!-- ━━━ COL 1: 3/5 — SCHEDULE + TODO ━━━ -->
+      <div>
+        <!-- Hero -->
+        <div class="hero-card" style="background:#EBF4FF">
+          <div class="hero-left">
+            <div class="hero-day-lbl" id="hero-day-name">Monday</div>
+            <div class="hero-date-txt" id="hero-date">March 24</div>
+            <div class="hero-pills">
+              <div class="hero-pill" id="hero-events">0 activities</div>
+            </div>
+          </div>
+          <div class="hero-emoji" id="hero-emoji">🦸</div>
+        </div>
+
+        <!-- Today's schedule -->
+        <div class="section-card">
+          <div class="section-hdr">
+            <div class="section-title">📅 Today's Schedule</div>
+          </div>
+          <div id="today-events"></div>
+        </div>
+
+        <!-- Tomorrow -->
+        <div class="section-card">
+          <div class="section-hdr">
+            <div class="section-title">Tomorrow</div>
+          </div>
+          <div style="padding:10px 14px">
             <div class="tom-pills" id="tomorrow-events"></div>
           </div>
         </div>
 
-        <!-- To-Do panel -->
-        </div>
-        </div>
-
-        <!-- Xavier To-Do List below schedule -->
-        <div style="margin-top:14px">
-          <div style="background:white;border-radius:14px;border:1px solid #D6E4F5;overflow:hidden">
-            <div style="padding:12px 16px;border-bottom:1px solid #D6E4F5;background:#EBF4FF;display:flex;align-items:center;justify-content:space-between">
-              <div style="display:flex;align-items:center;gap:7px">
-                <span style="font-size:14px">✅</span>
-                <span style="font-size:13px;font-weight:800;color:#1A1C20">Xavier's To-Do List</span>
-                <span id="todo-subtab-badge" style="background:#5B9DC8;color:white;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;display:none">0</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:5px">
-                <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
-                <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
-                <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
-                <button class="todo-add-inline-btn" onclick="openTodoModal()">+ Add</button>
-              </div>
+        <!-- Xavier's To-Do List -->
+        <div class="section-card">
+          <div class="todo-hdr-row">
+            <div class="todo-title-row">
+              <span style="font-size:14px">✅</span>
+              <span class="todo-title">Xavier's To-Do List</span>
+              <span class="todo-badge" id="todo-subtab-badge">0</span>
             </div>
-            <div id="todo-list-main">
-              <div class="todo-empty-msg">No to-dos yet! Xavier can add by voice 🎙️</div>
+            <div class="todo-filter-row">
+              <button class="tfilt active" onclick="switchTodoView('all')">All</button>
+              <button class="tfilt" onclick="switchTodoView('xavier')">👦</button>
+              <button class="tfilt" onclick="switchTodoView('parent')">👨</button>
+              <button class="todo-add-btn" onclick="openTodoModal()">+ Add</button>
             </div>
           </div>
+          <div id="todo-list-main">
+            <div class="todo-empty">No to-dos yet! Xavier can add by voice 🎙️</div>
+          </div>
         </div>
-
       </div>
 
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- AI Panel -->
-        <div class="ai-card">
-          <div class="ai-card-header">
+      <!-- ━━━ COL 2: 1/5 — AI + PREP ━━━ -->
+      <div>
+        <!-- Voice + AI -->
+        <div class="side-card">
+          <div class="side-hdr">
             <div class="ai-avatar">🤖</div>
-            <div>
-              <div class="ai-card-name">Captain X AI</div>
-              <div class="ai-card-sub">Ask anything about Xavier's schedule</div>
+            <div style="flex:1;margin-left:6px">
+              <div class="side-title">Captain X AI</div>
+              <div style="font-size:9px;color:#8BA5BF;font-weight:600">Ask anything</div>
             </div>
           </div>
-          <div class="ai-messages" id="ai-messages">
+          <!-- Voice button -->
+          <div style="padding:8px 10px 0">
+            <button class="voice-mini" id="xavier-voice-btn" onclick="toggleXavierVoice()">
+              <div class="vm-orb">🎙️</div>
+              <div>
+                <div class="vm-main" id="v-label-main">Hey Xavier!</div>
+                <div class="vm-sub" id="v-label-sub">Tap to talk</div>
+              </div>
+            </button>
+          </div>
+          <div class="ai-msgs" id="ai-messages">
             <div class="msg msg-ai" id="greeting-msg">Loading...</div>
           </div>
-          <div class="ai-suggestions" id="ai-suggestions">
-            <button class="sug-btn" onclick="askAI('What does this week look like?')">📅 What does this week look like?</button>
-            <button class="sug-btn" onclick="askAI('What gear does Xavier need today?')">🎒 What gear does Xavier need today?</button>
-            <button class="sug-btn" onclick="askAI('How much are we spending weekly?')">💰 How much are we spending weekly?</button>
+          <div class="ai-sugs" id="ai-suggestions">
+            <button class="sug-btn" onclick="askAI('What does this week look like?')">📅 This week?</button>
+            <button class="sug-btn" onclick="askAI('What gear does Xavier need today?')">🎒 Gear today?</button>
+            <button class="sug-btn" onclick="askAI('How much are we spending weekly?')">💰 Weekly cost?</button>
           </div>
           <div class="ai-input-row">
-            <input class="ai-input" id="ai-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendAI()"/>
+            <input class="ai-inp" id="ai-input" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendAI()"/>
             <button class="mic-btn" id="mic-btn" onclick="toggleMicInput()">
-              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-1 14.93A7.001 7.001 0 0 1 5 11H3a9 9 0 0 0 8 8.94V22h2v-2.06A9 9 0 0 0 21 11h-2a7 7 0 0 1-6 6.93z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-1 14.93A7 7 0 0 1 5 11H3a9 9 0 0 0 8 8.94V22h2v-2.06A9 9 0 0 0 21 11h-2a7 7 0 0 1-6 6.93z"/></svg>
             </button>
-            <button class="ai-send" onclick="sendAI()">
-              <svg viewBox="0 0 16 16"><path d="M14 8L2 2l2 6-2 6 12-6z"/></svg>
-            </button>
+            <button class="ai-send" onclick="sendAI()"><svg viewBox="0 0 16 16"><path d="M14 8L2 2l2 6-2 6 12-6z"/></svg></button>
           </div>
         </div>
 
-        <!-- Alerts -->
-        <div class="alerts-card">
-          <div class="card-header">
-            <div class="card-title">🎒 Prep Reminders <span class="badge-count" id="alert-badge">2</span></div>
+        <!-- Prep Reminders -->
+        <div class="side-card">
+          <div class="side-hdr">
+            <div class="side-title">🎒 Prep Reminders</div>
+            <div class="side-badge" id="alert-badge">0</div>
           </div>
-          <div id="alert-list">
-            <div class="alert-row"><div class="alert-icon-box" style="background:#E8F2FB">🏒</div><div class="alert-text-block"><div class="alert-title">Pack hockey gear</div><div class="alert-sub">Skates, helmet, gloves, stick</div></div><div class="check-circle" onclick="toggleAlertDone(this)"></div></div>
-            <div class="alert-row"><div class="alert-icon-box" style="background:#E6F4EC">🤺</div><div class="alert-text-block"><div class="alert-title">Pack fencing gear</div><div class="alert-sub">Mask, jacket, glove, foil</div></div><div class="check-circle" onclick="toggleAlertDone(this)"></div></div>
-          </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="summary-card">
-          <div class="card-header">
-            <div class="card-title">📋 All Activities <span class="badge-count" style="background:var(--purple)" id="summary-count">0</span></div>
-          </div>
-          <div class="summary-list" id="summary-list"></div>
-          <div id="cost-panel" style="background:#F3FAF7;border-top:1.5px solid rgba(0,184,148,.2);padding:12px 16px">
-              <div style="font-size:10px;font-weight:800;color:#00A870;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">💰 Weekly Cost</div>
-              <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-                <span id="cost-strip-amt" style="font-size:22px;font-weight:700;color:#00A870;letter-spacing:-.5px">$0</span>
-                <span style="font-size:11px;color:#00A870;opacity:.7">/week</span>
-              </div>
-              <div id="cost-breakdown-rows"></div>
-            </div>
+          <div id="alert-list"></div>
         </div>
       </div>
+
+      <!-- ━━━ COL 3: 1/5 — ACTIVITIES + COST ━━━ -->
+      <div>
+        <!-- All Activities -->
+        <div class="side-card">
+          <div class="side-hdr">
+            <div class="side-title">📋 All Activities</div>
+            <div class="side-badge" id="summary-count">0</div>
+          </div>
+          <div class="summary-list" id="summary-list"></div>
+        </div>
+
+        <!-- Cost Breakdown -->
+        <div class="side-card">
+          <div class="side-hdr">
+            <div class="side-title">💰 Weekly Cost</div>
+          </div>
+          <div class="cost-total-row">
+            <div class="cost-total-lbl">Total per week</div>
+            <div style="display:flex;align-items:baseline;gap:5px">
+              <span class="cost-total-amt" id="cost-strip-amt">$0</span>
+              <span class="cost-total-sub">/wk</span>
+            </div>
+          </div>
+          <div id="cost-breakdown-rows"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
   <!-- WEEK VIEW -->
-  <div id="view-week">
+  <div id="view-week" style="display:none">
     <div class="week-nav">
-      <div class="week-nav-title" id="week-title">Week of <span>—</span></div>
-      <div class="nav-arrows">
-        <button class="arrow-btn" onclick="changeWeek(-1)">‹</button>
-        <button class="arrow-btn" onclick="changeWeek(1)">›</button>
+      <div class="week-title" id="week-title">Week of <span>—</span></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="nav-arrows">
+          <button class="arrow-btn" onclick="changeWeek(-1)">‹</button>
+          <button class="arrow-btn" onclick="changeWeek(1)">›</button>
+        </div>
+        <button class="hbtn" onclick="exportWeekPDF()">📄 Save PDF</button>
       </div>
     </div>
     <div class="week-grid" id="week-grid"></div>
     <div class="week-legend" id="week-legend"></div>
-    <div class="week-cost-bar" id="week-cost-bar" style="display:none">
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">💰 Weekly Activity Cost</div>
-        <div style="display:flex;align-items:baseline;gap:8px">
-          <span style="font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal)" id="week-total-amt">$0</span>
-          <span style="font-size:12px;color:var(--text-2)" id="week-total-mo"></span>
-        </div>
-      </div>
-      <button class="pdf-btn" onclick="exportWeekPDF()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg>
-        Save week as PDF
-      </button>
-    </div>
+    <div id="week-cost-bar"></div>
   </div>
+
 </div>
 
-<!-- TODO SLIDE PANEL -->
-<button class="todo-toggle-btn" id="todo-toggle-btn" onclick="toggleTodoPanel()">
-  <span class="todo-badge-float" id="todo-float-badge" style="display:none">0</span>
-  ✅ To-Dos
-</button>
-
-
-
 <!-- FAB -->
-<button class="add-btn" onclick="openModal()">
-  <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+<button class="add-fab" id="add-fab-btn" onclick="openModal()">
+  <svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
   Add Activity
 </button>
 
@@ -530,13 +915,13 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
       <div id="custom-box" class="custom-box" style="display:none">
         <label class="form-label" style="margin-bottom:5px">Custom name</label>
         <input class="form-input" id="custom-name-input" placeholder="e.g. Piano, Drama..."/>
-        <label class="form-label" style="margin-top:8px;margin-bottom:4px">Pick a color</label>
+        <label class="form-label" style="margin-top:8px;margin-bottom:4px">Color</label>
         <div class="color-row" id="color-row"></div>
       </div>
     </div>
     <div class="modal-divider"></div>
     <div class="form-row">
-      <label class="form-label">Label <span style="font-weight:600;text-transform:none;font-size:10px;color:var(--text-3)">(optional)</span></label>
+      <label class="form-label">Label <span style="font-size:9px;text-transform:none;color:#8BA5BF">(optional)</span></label>
       <input class="form-input" id="f-name" placeholder="Leave blank to use type name"/>
     </div>
     <div class="form-row">
@@ -562,14 +947,18 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
       <div><label class="form-label">Location</label><input class="form-input" id="f-loc" placeholder="e.g. Iceworld Arena"/></div>
       <div>
         <label class="form-label">Cost per session</label>
-        <div class="cost-input-wrap"><span class="currency">$</span><input class="form-input" id="f-cost" type="number" min="0" step="0.01" placeholder="0.00"/></div>
+        <div class="cost-input-wrap">
+          <span class="currency">$</span>
+          <input class="form-input" id="f-cost" type="number" min="0" step="0.01" placeholder="0.00"/>
+        </div>
+        <div class="cost-freq-note" id="cost-freq-note">Per session</div>
       </div>
     </div>
     <div class="modal-divider"></div>
     <div class="form-row">
       <label class="form-label">Schedule Type</label>
       <div class="recur-row">
-        <div class="recur-opt sel" data-recur="weekly" onclick="selectRecur('weekly')">🔁 Repeats weekly</div>
+        <div class="recur-opt sel" data-recur="weekly" onclick="selectRecur('weekly')">🔁 Weekly</div>
         <div class="recur-opt" data-recur="daterange" onclick="selectRecur('daterange')">📆 Date range</div>
         <div class="recur-opt" data-recur="once" onclick="selectRecur('once')">1️⃣ One time</div>
       </div>
@@ -592,25 +981,25 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 <!-- DETAIL MODAL -->
 <div class="modal-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
   <div class="detail-modal">
-    <div class="detail-hero">
-      <div class="detail-emoji-big" id="d-emoji">🏒</div>
-      <div><div class="detail-title" id="d-title">Event</div><div class="detail-sub" id="d-subtitle"></div></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #EAF2FA">
+      <div style="font-size:32px" id="d-emoji">🏒</div>
+      <div><div style="font-size:16px;font-weight:800;color:#1A2433" id="d-title">Event</div><div style="font-size:11px;color:#8BA5BF;font-weight:600;margin-top:2px" id="d-subtitle"></div></div>
     </div>
     <div id="d-rows"></div>
-    <div class="modal-actions" style="margin-top:16px">
+    <div class="modal-actions" style="margin-top:14px">
       <button class="btn-cancel" onclick="closeDetail()">Close</button>
-      <button class="btn-save" style="background:var(--purple)" onclick="editFromDetail()">✏️ Edit</button>
+      <button class="btn-save" onclick="editFromDetail()">✏️ Edit</button>
       <button class="btn-delete" onclick="deleteFromDetail()">🗑 Delete</button>
     </div>
   </div>
 </div>
 
-<!-- CONFIRM DELETE -->
+<!-- CONFIRM -->
 <div class="modal-overlay" id="confirm-overlay" onclick="if(event.target===this)closeConfirm()">
   <div class="confirm-modal">
-    <div style="font-size:40px;margin-bottom:12px">🗑️</div>
-    <div style="font-size:18px;font-weight:800;margin-bottom:8px" id="confirm-title">Delete this?</div>
-    <div style="font-size:13px;color:var(--text-2);margin-bottom:20px;font-weight:600" id="confirm-body">This cannot be undone.</div>
+    <div style="font-size:36px;text-align:center;margin-bottom:10px">🗑️</div>
+    <div style="font-size:16px;font-weight:800;text-align:center;margin-bottom:6px;color:#1A2433" id="confirm-title">Delete this?</div>
+    <div style="font-size:12px;color:#5A7090;text-align:center;margin-bottom:16px;line-height:1.6;font-weight:600" id="confirm-body">This cannot be undone.</div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeConfirm()">Keep it</button>
       <button class="btn-delete" onclick="confirmDelete()">Yes, delete</button>
@@ -618,28 +1007,51 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   </div>
 </div>
 
-<!-- SHARE MODAL -->
-<div class="modal-overlay" id="share-overlay" onclick="if(event.target===this)document.getElementById('share-overlay').classList.remove('open')">
-  <div class="modal" style="max-width:440px">
-    <div class="modal-title">Share <span>Captain X</span></div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div style="background:var(--teal-bg);border:2px solid rgba(0,184,148,.3);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:13px;font-weight:800;color:var(--teal);margin-bottom:5px">✅ Share your live URL</div>
-        <div style="font-size:12px;color:var(--text-2);font-weight:600;line-height:1.6">Send your Netlify link to anyone — they see Xavier's live schedule. Password protects editing.</div>
-        <div id="share-url-display" style="margin-top:8px;background:var(--surface);border-radius:8px;padding:8px 10px;font-size:11px;word-break:break-all;font-weight:700;color:var(--purple)"></div>
-      </div>
-      <div style="background:var(--purple-light);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:13px;font-weight:800;color:var(--purple);margin-bottom:5px">🔒 Edit password</div>
-        <div style="font-size:12px;color:var(--text-2);font-weight:600;line-height:1.6">Current password: <code style="background:var(--surface);padding:2px 6px;border-radius:5px">captainx2025</code><br/>Tell this only to people you want editing.</div>
+<!-- TODO MODAL -->
+<div class="modal-overlay" id="todo-modal-overlay" onclick="if(event.target===this)closeTodoModal()">
+  <div class="todo-modal">
+    <div class="modal-title">Add <span>to-do</span></div>
+    <div class="form-row">
+      <label class="form-label">What needs doing?</label>
+      <input class="form-input" id="todo-input" placeholder="e.g. Finish homework, Pack bag..." onkeydown="if(event.key==='Enter')saveTodo()"/>
+    </div>
+    <div class="form-row">
+      <label class="form-label">For who?</label>
+      <div class="who-row">
+        <div class="who-opt sel-x" id="who-x" onclick="selectWho('xavier')">👦 Xavier</div>
+        <div class="who-opt" id="who-p" onclick="selectWho('parent')">👨 Parent</div>
       </div>
     </div>
-    <button class="btn-cancel" style="margin-top:14px;width:100%" onclick="document.getElementById('share-overlay').classList.remove('open')">Got it</button>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeTodoModal()">Cancel</button>
+      <button class="btn-save" onclick="saveTodo()">Add To-Do</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="share-overlay" onclick="if(event.target===this)document.getElementById('share-overlay').classList.remove('open')">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-title">Share <span>Captain X</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+      <div style="background:#E0FBF4;border:1px solid #80D8BB;border-radius:10px;padding:12px 14px">
+        <div style="font-size:12px;font-weight:800;color:#00A870;margin-bottom:3px">✅ Live for everyone</div>
+        <div style="font-size:11px;color:#5A7090;line-height:1.6;font-weight:600">Anyone with your Netlify link sees the same schedule — synced via Firebase.</div>
+      </div>
+      <div style="background:#FFF8E6;border:1px solid #F5D78E;border-radius:10px;padding:12px 14px">
+        <div style="font-size:12px;font-weight:800;color:#C47D0E;margin-bottom:3px">🔒 To edit: tap the lock button</div>
+        <div style="font-size:11px;color:#5A7090;line-height:1.6;font-weight:600">Enter the password to unlock editing. Share it with anyone who needs to edit.</div>
+      </div>
+    </div>
+    <div id="share-url-display" style="margin-bottom:12px;background:#FFFFFF;border-radius:9px;padding:9px 12px;font-size:11px;color:#5A7090;display:none;font-weight:600"></div>
+    <button onclick="document.getElementById('share-overlay').classList.remove('open')" style="width:100%;padding:10px;border:1px solid #D8E8F4;border-radius:9px;background:none;font-size:12px;font-weight:800;color:#5A7090;cursor:pointer;font-family:inherit">Got it</button>
   </div>
 </div>
 
 <div class="voice-toast" id="voice-toast"></div>
 
 <script>
+
 // ── Constants ──
 const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 const HOURS=['7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm'];
@@ -1333,299 +1745,181 @@ async function init(){
   if(synth){synth.getVoices();synth.onvoiceschanged=()=>synth.getVoices();}
 }
 init();
+
+
+// ━━━ OVERRIDE renderToday for new layout ━━━
+const _origRenderToday = renderToday;
+renderToday = function() {
+  const ti = getToday(), now = new Date();
+  const EMOJIS = ['🏃','⚡','💪','🎯','🏆','🎮','😎'];
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('hero-day-name').textContent = DAYS[ti];
+  document.getElementById('hero-date').textContent = MONTHS[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear();
+  document.getElementById('hero-emoji').textContent = EMOJIS[ti] || '🦸';
+  const acts = activities.filter(a => a.day === ti).sort((a,b) => t2m(a.time) - t2m(b.time));
+  const nonSchool = acts.filter(a => a.type !== 'school');
+  document.getElementById('hero-events').textContent = nonSchool.length ? nonSchool.length + ' activit' + (nonSchool.length > 1 ? 'ies' : 'y') : 'School only';
+
+  // Render events
+  const container = document.getElementById('today-events');
+  if (!acts.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:#8BA5BF;font-size:13px;font-weight:700">Free day! 🎉</div>';
+  } else {
+    container.innerHTML = acts.map(a => {
+      const ti2 = getType(a.type);
+      const gear = a.gear && a.gear.length ? `<div class="ev-gear-row" style="color:${ti2.color}">🎒 ${a.gear.join(', ')}</div>` : '';
+      const privBadge = a.format === 'private' ? `<span class="ev-pill" style="background:#FFF0D4;color:#C47D0E">⭐ Private</span>` : '';
+      const costBadge = a.cost > 0 ? `<div class="ev-cost">$${parseFloat(a.cost).toFixed(2)}</div>` : '';
+      return `<div class="ev-card" onclick="openDetail(${a.id})">
+        <div class="ev-time-col">
+          <div class="ev-time-start" style="color:${ti2.color}">${m2t(t2m(a.time))}</div>
+          ${a.endTime ? `<div class="ev-time-sep">↓</div><div class="ev-time-end">${m2t(t2m(a.endTime))}</div>` : ''}
+        </div>
+        <div class="ev-dot" style="background:${ti2.color}"></div>
+        <div class="ev-icon-box" style="background:${ti2.bg}">${ti2.emoji}</div>
+        <div class="ev-info">
+          <div class="ev-name" style="color:${ti2.color}">${a.name}</div>
+          <div class="ev-loc">📍 ${a.location}</div>
+          <div class="ev-pills">
+            <span class="ev-pill" style="background:${ti2.color};color:white">${ti2.label}</span>
+            ${privBadge}
+          </div>
+          ${gear}
+        </div>
+        ${costBadge}
+      </div>`;
+    }).join('');
+  }
+
+  // Tomorrow
+  const tom = (ti + 1) % 7;
+  const tomActs = activities.filter(a => a.day === tom).sort((a,b) => t2m(a.time) - t2m(b.time));
+  document.getElementById('tomorrow-events').innerHTML = tomActs.length
+    ? tomActs.map(a => { const t2 = getType(a.type); return `<div class="tom-pill" style="background:${t2.color}">${t2.emoji} ${m2t(t2m(a.time))} ${a.name}</div>`; }).join('')
+    : '<span style="font-size:12px;color:#8BA5BF;font-weight:700">Free day 🌟</span>';
+
+  // Prep alerts
+  const alertList = document.getElementById('alert-list');
+  const todayGear = acts.flatMap(a => (a.gear || []).map(g => ({ gear: g, act: a })));
+  const badge = document.getElementById('alert-badge');
+  if (!todayGear.length) {
+    alertList.innerHTML = '<div style="padding:12px;font-size:11px;color:#8BA5BF;text-align:center;font-weight:600">Nothing to pack today 👍</div>';
+    badge.textContent = '0';
+  } else {
+    badge.textContent = todayGear.length;
+    alertList.innerHTML = todayGear.map(({gear, act}) => {
+      const ti3 = getType(act.type);
+      return `<div class="alert-row">
+        <div class="alert-icon-box" style="background:${ti3.bg}">${ti3.emoji}</div>
+        <div style="flex:1"><div class="alert-title">${gear}</div><div class="alert-sub">${act.name}</div></div>
+        <div class="check-circle alert-done" onclick="toggleAlertDone(this)"></div>
+      </div>`;
+    }).join('');
+  }
+
+  // Greeting in AI
+  const h = now.getHours();
+  const g = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  const gEl = document.getElementById('greeting-msg');
+  if (gEl) {
+    const names = nonSchool.map(a => a.name);
+    gEl.textContent = names.length ? `${g}! Xavier has ${names.join(' and ')} today! 🎉` : `${g}! Free day for Xavier today — just school! 😊`;
+  }
+
+  renderSummary();
+  renderTodoMain();
+};
+
+// ━━━ OVERRIDE renderSummary for new cost layout ━━━
+const _origRenderSummary = renderSummary;
+renderSummary = function() {
+  const list = document.getElementById('summary-list');
+  const seen = new Map();
+  activities.forEach(a => { const k = `${a.name}__${a.type}__${a.day}`; if (!seen.has(k)) seen.set(k, a); });
+  const unique = [...seen.values()].sort((a,b) => a.type.localeCompare(b.type) || a.day - b.day);
+  document.getElementById('summary-count').textContent = unique.length;
+  list.innerHTML = '';
+  unique.forEach(a => {
+    const ti = getType(a.type);
+    const div = document.createElement('div'); div.className = 'summary-row';
+    div.innerHTML = `<div class="sum-dot" style="background:${ti.color}"></div>
+      <div class="sum-info">
+        <div class="sum-name">${ti.emoji} ${a.name}</div>
+        <div class="sum-meta">${DAYS[a.day]} · ${m2t(t2m(a.time))}</div>
+        ${a.cost > 0 ? `<div class="sum-cost">$${parseFloat(a.cost).toFixed(2)}/session</div>` : ''}
+      </div>
+      <div style="display:flex;gap:3px">
+        <button class="sa-btn" onclick="event.stopPropagation();openEdit(${a.id})">✏️</button>
+        <button class="sa-btn del" onclick="event.stopPropagation();askDelete(${a.id})">🗑</button>
+      </div>`;
+    list.appendChild(div);
+  });
+
+  // Cost breakdown
+  const costItems = activities.filter(a => a.type !== 'school' && a.cost > 0);
+  const total = costItems.reduce((s, a) => s + parseFloat(a.cost || 0), 0);
+  const amtEl = document.getElementById('cost-strip-amt');
+  if (amtEl) amtEl.textContent = total > 0 ? `$${total.toFixed(2)}` : '$0';
+  const rowsEl = document.getElementById('cost-breakdown-rows');
+  if (rowsEl) {
+    if (!costItems.length) {
+      rowsEl.innerHTML = '<div class="cost-empty">Add costs when editing activities 💡</div>';
+    } else {
+      const groups = {};
+      costItems.forEach(a => {
+        if (!groups[a.type]) groups[a.type] = { subtotal: 0, items: [] };
+        groups[a.type].subtotal += parseFloat(a.cost || 0);
+        groups[a.type].items.push(a);
+      });
+      rowsEl.innerHTML = '';
+      Object.entries(groups).forEach(([typeId, grp]) => {
+        const ti = getType(typeId);
+        const pct = total > 0 ? Math.round((grp.subtotal / total) * 100) : 0;
+        const row = document.createElement('div'); row.className = 'cost-row';
+        row.innerHTML = `<div class="cost-dot" style="background:${ti.color}"></div>
+          <div class="cost-nm">${ti.emoji} ${ti.label}</div>
+          <div class="cost-pct">${pct}%</div>
+          <div class="cost-amt">$${grp.subtotal.toFixed(2)}</div>`;
+        rowsEl.appendChild(row);
+      });
+    }
+  }
+  updateEditMode();
+};
+
+// ━━━ renderTodoMain ━━━
+let currentTodoView = 'all';
+function switchTodoView(view) {
+  currentTodoView = view;
+  document.querySelectorAll('.tfilt').forEach((el, i) => {
+    el.classList.toggle('active', ['all','xavier','parent'][i] === view);
+  });
+  renderTodoMain();
+}
+function renderTodoMain() {
+  const container = document.getElementById('todo-list-main');
+  if (!container) return;
+  let filtered = todos;
+  if (currentTodoView === 'xavier') filtered = todos.filter(t => t.who === 'xavier');
+  if (currentTodoView === 'parent') filtered = todos.filter(t => t.who === 'parent');
+  const badge = document.getElementById('todo-subtab-badge');
+  const active = todos.filter(t => !t.done).length;
+  if (badge) { badge.textContent = active; badge.style.display = active > 0 ? 'inline' : 'none'; }
+  if (!filtered.length) {
+    container.innerHTML = '<div class="todo-empty">No to-dos yet! Xavier can add by voice 🎙️</div>';
+    return;
+  }
+  container.innerHTML = '';
+  filtered.forEach(t => {
+    const realIdx = todos.indexOf(t);
+    const div = document.createElement('div'); div.className = 'todo-item';
+    div.innerHTML = `<div class="todo-chk${t.done ? ' done' : ''}" onclick="toggleTodo(${realIdx})">${t.done ? '✓' : ''}</div>
+      <div class="todo-txt${t.done ? ' done' : ''}">${t.text}</div>
+      <span class="todo-who tw-${t.who === 'xavier' ? 'x' : 'p'}">${t.who === 'xavier' ? '👦' : '👨'}</span>
+      <button class="todo-del" onclick="deleteTodo(${realIdx})">×</button>`;
+    container.appendChild(div);
+  });
+}
 </script>
-</body>
-</html>
-      <button class="hbtn" id="lock-btn" onclick="promptPassword()">🔒 View only</button>
-      <button class="hbtn" onclick="openModal()">＋ Add Activity</button>
-    </div>
-  </div>
-
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" id="tab-today" onclick="switchTab('today')">📅 Today</button>
-    <button class="tab" id="tab-week" onclick="switchTab('week')">🗓 This Week</button>
-  </div>
-
-  <!-- TODAY VIEW -->
-  <div id="view-today">
-    <!-- Date Hero -->
-    <div class="date-hero">
-      <div class="date-hero-left">
-        <div class="date-hero-day" id="hero-day">Monday</div>
-        <div class="date-hero-date"><span id="hero-date">March 24</span></div>
-        <div class="date-hero-sub" id="hero-sub">Loading schedule...</div>
-      </div>
-      <div class="date-hero-right">
-        <div class="event-pill" id="hero-pill">0 activities</div>
-        <button class="voice-mini-btn" id="xavier-voice-btn" onclick="toggleXavierVoice()">
-          <span>🎙️</span>
-          <span id="v-label-main">Hey Xavier!</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="today-layout">
-      <!-- Events -->
-      <div class="events-col">
-        <!-- Sub-tabs: Schedule | To-Do -->
-        <!-- Schedule panel - always visible -->
-        <div id="subview-schedule">
-          <div class="events-list" id="today-events"></div>
-          <div class="tomorrow-card" style="background:white;border-radius:16px;border:2px solid #D6E4F5;padding:12px 16px;margin-bottom:14px">
-            <div class="tomorrow-label">Tomorrow</div>
-            <div class="tom-pills" id="tomorrow-events"></div>
-          </div>
-        </div>
-
-        <!-- To-Do panel -->
-        </div>
-        </div>
-
-        <!-- Xavier To-Do List below schedule -->
-        <div style="margin-top:14px">
-          <div style="background:white;border-radius:14px;border:1px solid #D6E4F5;overflow:hidden">
-            <div style="padding:12px 16px;border-bottom:1px solid #D6E4F5;background:#EBF4FF;display:flex;align-items:center;justify-content:space-between">
-              <div style="display:flex;align-items:center;gap:7px">
-                <span style="font-size:14px">✅</span>
-                <span style="font-size:13px;font-weight:800;color:#1A1C20">Xavier's To-Do List</span>
-                <span id="todo-subtab-badge" style="background:#5B9DC8;color:white;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;display:none">0</span>
-              </div>
-              <div style="display:flex;align-items:center;gap:5px">
-                <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
-                <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
-                <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
-                <button class="todo-add-inline-btn" onclick="openTodoModal()">+ Add</button>
-              </div>
-            </div>
-            <div id="todo-list-main">
-              <div class="todo-empty-msg">No to-dos yet! Xavier can add by voice 🎙️</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Sidebar -->
-      <div class="sidebar">
-        <!-- AI Panel -->
-        <div class="ai-card">
-          <div class="ai-card-header">
-            <div class="ai-avatar">🤖</div>
-            <div>
-              <div class="ai-card-name">Captain X AI</div>
-              <div class="ai-card-sub">Ask anything about Xavier's schedule</div>
-            </div>
-          </div>
-          <div class="ai-messages" id="ai-messages">
-            <div class="msg msg-ai" id="greeting-msg">Loading...</div>
-          </div>
-          <div class="ai-suggestions" id="ai-suggestions">
-            <button class="sug-btn" onclick="askAI('What does this week look like?')">📅 What does this week look like?</button>
-            <button class="sug-btn" onclick="askAI('What gear does Xavier need today?')">🎒 What gear does Xavier need today?</button>
-            <button class="sug-btn" onclick="askAI('How much are we spending weekly?')">💰 How much are we spending weekly?</button>
-          </div>
-          <div class="ai-input-row">
-            <input class="ai-input" id="ai-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendAI()"/>
-            <button class="mic-btn" id="mic-btn" onclick="toggleMicInput()">
-              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-1 14.93A7.001 7.001 0 0 1 5 11H3a9 9 0 0 0 8 8.94V22h2v-2.06A9 9 0 0 0 21 11h-2a7 7 0 0 1-6 6.93z"/></svg>
-            </button>
-            <button class="ai-send" onclick="sendAI()">
-              <svg viewBox="0 0 16 16"><path d="M14 8L2 2l2 6-2 6 12-6z"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Alerts -->
-        <div class="alerts-card">
-          <div class="card-header">
-            <div class="card-title">🎒 Prep Reminders <span class="badge-count" id="alert-badge">2</span></div>
-          </div>
-          <div id="alert-list">
-            <div class="alert-row"><div class="alert-icon-box" style="background:#E8F2FB">🏒</div><div class="alert-text-block"><div class="alert-title">Pack hockey gear</div><div class="alert-sub">Skates, helmet, gloves, stick</div></div><div class="check-circle" onclick="toggleAlertDone(this)"></div></div>
-            <div class="alert-row"><div class="alert-icon-box" style="background:#E6F4EC">🤺</div><div class="alert-text-block"><div class="alert-title">Pack fencing gear</div><div class="alert-sub">Mask, jacket, glove, foil</div></div><div class="check-circle" onclick="toggleAlertDone(this)"></div></div>
-          </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="summary-card">
-          <div class="card-header">
-            <div class="card-title">📋 All Activities <span class="badge-count" style="background:var(--purple)" id="summary-count">0</span></div>
-          </div>
-          <div class="summary-list" id="summary-list"></div>
-          <div id="cost-panel" style="background:#F3FAF7;border-top:1.5px solid rgba(0,184,148,.2);padding:12px 16px">
-              <div style="font-size:10px;font-weight:800;color:#00A870;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">💰 Weekly Cost</div>
-              <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-                <span id="cost-strip-amt" style="font-size:22px;font-weight:700;color:#00A870;letter-spacing:-.5px">$0</span>
-                <span style="font-size:11px;color:#00A870;opacity:.7">/week</span>
-              </div>
-              <div id="cost-breakdown-rows"></div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- WEEK VIEW -->
-  <div id="view-week">
-    <div class="week-nav">
-      <div class="week-nav-title" id="week-title">Week of <span>—</span></div>
-      <div class="nav-arrows">
-        <button class="arrow-btn" onclick="changeWeek(-1)">‹</button>
-        <button class="arrow-btn" onclick="changeWeek(1)">›</button>
-      </div>
-    </div>
-    <div class="week-grid" id="week-grid"></div>
-    <div class="week-legend" id="week-legend"></div>
-    <div class="week-cost-bar" id="week-cost-bar" style="display:none">
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">💰 Weekly Activity Cost</div>
-        <div style="display:flex;align-items:baseline;gap:8px">
-          <span style="font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal)" id="week-total-amt">$0</span>
-          <span style="font-size:12px;color:var(--text-2)" id="week-total-mo"></span>
-        </div>
-      </div>
-      <button class="pdf-btn" onclick="exportWeekPDF()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg>
-        Save week as PDF
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- TODO SLIDE PANEL -->
-<button class="todo-toggle-btn" id="todo-toggle-btn" onclick="toggleTodoPanel()">
-  <span class="todo-badge-float" id="todo-float-badge" style="display:none">0</span>
-  ✅ To-Dos
-</button>
-<div class="todo-overlay" id="todo-overlay" onclick="closeTodoPanel()"></div>
-
-
-<!-- FAB -->
-<button class="add-btn" onclick="openModal()">
-  <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
-  Add Activity
-</button>
-
-<!-- ADD/EDIT MODAL -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-title" id="modal-title-txt">Add <span>activity</span></div>
-    <div class="form-row">
-      <label class="form-label">Activity Type</label>
-      <div class="type-grid" id="type-grid"></div>
-      <div id="custom-box" class="custom-box" style="display:none">
-        <label class="form-label" style="margin-bottom:5px">Custom name</label>
-        <input class="form-input" id="custom-name-input" placeholder="e.g. Piano, Drama..."/>
-        <label class="form-label" style="margin-top:8px;margin-bottom:4px">Pick a color</label>
-        <div class="color-row" id="color-row"></div>
-      </div>
-    </div>
-    <div class="modal-divider"></div>
-    <div class="form-row">
-      <label class="form-label">Label <span style="font-weight:600;text-transform:none;font-size:10px;color:var(--text-3)">(optional)</span></label>
-      <input class="form-input" id="f-name" placeholder="Leave blank to use type name"/>
-    </div>
-    <div class="form-row">
-      <label class="form-label">Lesson Format</label>
-      <div class="format-row">
-        <div class="fmt-opt sel" data-fmt="group" onclick="selectFmt('group')">👥 Group</div>
-        <div class="fmt-opt" data-fmt="private" onclick="selectFmt('private')">⭐ Private</div>
-        <div class="fmt-opt" data-fmt="general" onclick="selectFmt('general')">📅 General</div>
-      </div>
-    </div>
-    <div class="modal-divider"></div>
-    <div class="form-row-3">
-      <div><label class="form-label">Day</label>
-        <select class="form-input" id="f-day">
-          <option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option>
-          <option value="3">Thursday</option><option value="4">Friday</option><option value="5">Saturday</option><option value="6">Sunday</option>
-        </select>
-      </div>
-      <div><label class="form-label">From</label><input class="form-input" id="f-start-time" type="time" value="15:30"/></div>
-      <div><label class="form-label">To</label><input class="form-input" id="f-end-time" type="time" value="16:30"/></div>
-    </div>
-    <div class="form-row-2">
-      <div><label class="form-label">Location</label><input class="form-input" id="f-loc" placeholder="e.g. Iceworld Arena"/></div>
-      <div>
-        <label class="form-label">Cost per session</label>
-        <div class="cost-input-wrap"><span class="currency">$</span><input class="form-input" id="f-cost" type="number" min="0" step="0.01" placeholder="0.00"/></div>
-      </div>
-    </div>
-    <div class="modal-divider"></div>
-    <div class="form-row">
-      <label class="form-label">Schedule Type</label>
-      <div class="recur-row">
-        <div class="recur-opt sel" data-recur="weekly" onclick="selectRecur('weekly')">🔁 Repeats weekly</div>
-        <div class="recur-opt" data-recur="daterange" onclick="selectRecur('daterange')">📆 Date range</div>
-        <div class="recur-opt" data-recur="once" onclick="selectRecur('once')">1️⃣ One time</div>
-      </div>
-      <div class="date-fields hidden" id="daterange-fields">
-        <div><label class="form-label" style="margin-top:8px">Start Date</label><input class="form-input" id="f-start" type="date"/></div>
-        <div><label class="form-label" style="margin-top:8px">End Date</label><input class="form-input" id="f-end" type="date"/></div>
-      </div>
-      <div id="once-field" style="display:none;margin-top:8px">
-        <label class="form-label">Date</label><input class="form-input" id="f-once" type="date"/>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-      <button class="btn-delete" id="modal-delete-btn" style="display:none" onclick="deleteEditingActivity()">🗑 Delete</button>
-      <button class="btn-save" onclick="saveEvent()">Save Activity</button>
-    </div>
-  </div>
-</div>
-
-<!-- DETAIL MODAL -->
-<div class="modal-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
-  <div class="detail-modal">
-    <div class="detail-hero">
-      <div class="detail-emoji-big" id="d-emoji">🏒</div>
-      <div><div class="detail-title" id="d-title">Event</div><div class="detail-sub" id="d-subtitle"></div></div>
-    </div>
-    <div id="d-rows"></div>
-    <div class="modal-actions" style="margin-top:16px">
-      <button class="btn-cancel" onclick="closeDetail()">Close</button>
-      <button class="btn-save" style="background:var(--purple)" onclick="editFromDetail()">✏️ Edit</button>
-      <button class="btn-delete" onclick="deleteFromDetail()">🗑 Delete</button>
-    </div>
-  </div>
-</div>
-
-<!-- CONFIRM DELETE -->
-<div class="modal-overlay" id="confirm-overlay" onclick="if(event.target===this)closeConfirm()">
-  <div class="confirm-modal">
-    <div style="font-size:40px;margin-bottom:12px">🗑️</div>
-    <div style="font-size:18px;font-weight:800;margin-bottom:8px" id="confirm-title">Delete this?</div>
-    <div style="font-size:13px;color:var(--text-2);margin-bottom:20px;font-weight:600" id="confirm-body">This cannot be undone.</div>
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeConfirm()">Keep it</button>
-      <button class="btn-delete" onclick="confirmDelete()">Yes, delete</button>
-    </div>
-  </div>
-</div>
-
-<!-- SHARE MODAL -->
-<div class="modal-overlay" id="share-overlay" onclick="if(event.target===this)document.getElementById('share-overlay').classList.remove('open')">
-  <div class="modal" style="max-width:440px">
-    <div class="modal-title">Share <span>Captain X</span></div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div style="background:var(--teal-bg);border:2px solid rgba(0,184,148,.3);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:13px;font-weight:800;color:var(--teal);margin-bottom:5px">✅ Share your live URL</div>
-        <div style="font-size:12px;color:var(--text-2);font-weight:600;line-height:1.6">Send your Netlify link to anyone — they see Xavier's live schedule. Password protects editing.</div>
-        <div id="share-url-display" style="margin-top:8px;background:var(--surface);border-radius:8px;padding:8px 10px;font-size:11px;word-break:break-all;font-weight:700;color:var(--purple)"></div>
-      </div>
-      <div style="background:var(--purple-light);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px">
-        <div style="font-size:13px;font-weight:800;color:var(--purple);margin-bottom:5px">🔒 Edit password</div>
-        <div style="font-size:12px;color:var(--text-2);font-weight:600;line-height:1.6">Current password: <code style="background:var(--surface);padding:2px 6px;border-radius:5px">captainx2025</code><br/>Tell this only to people you want editing.</div>
-      </div>
-    </div>
-    <button class="btn-cancel" style="margin-top:14px;width:100%" onclick="document.getElementById('share-overlay').classList.remove('open')">Got it</button>
-  </div>
-</div>
-
-<div class="voice-toast" id="voice-toast"></div>
-
-
 </body>
 </html>
