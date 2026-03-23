@@ -382,15 +382,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
       <!-- Events -->
       <div class="events-col">
         <!-- Sub-tabs: Schedule | To-Do -->
-        <div class="subtabs">
-          <button class="subtab active" id="subtab-schedule" onclick="switchSubTab('schedule')">📅 Schedule</button>
-          <button class="subtab" id="subtab-todo" onclick="switchSubTab('todo')">
-            ✅ To-Do List
-            <span class="subtab-badge" id="todo-subtab-badge" style="display:none">0</span>
-          </button>
-        </div>
-
-        <!-- Schedule panel -->
+        <!-- Schedule panel - always visible -->
         <div id="subview-schedule">
           <div class="events-list" id="today-events"></div>
           <div class="tomorrow-card">
@@ -400,15 +392,23 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         </div>
 
         <!-- To-Do panel -->
-        <div id="subview-todo" style="display:none">
+        <!-- Xavier To-Do List - always visible below schedule -->
+        <div id="subview-todo" style="margin-top:12px">
           <div class="todo-sub-panel">
             <div class="todo-sub-header">
-              <div class="todo-sub-tabs">
-                <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
-                <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
-                <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="font-size:14px">✅</span>
+                <span style="font-size:12px;font-weight:800;color:var(--text)">Xavier's To-Do List</span>
+                <span id="todo-subtab-badge" style="background:#3D8EE8;color:white;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;display:none">0</span>
               </div>
-              <button class="todo-add-inline-btn" onclick="openTodoModal()">+ Add</button>
+              <div style="display:flex;gap:6px;align-items:center">
+                <div style="display:flex;gap:3px">
+                  <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
+                  <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
+                  <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
+                </div>
+                <button class="todo-add-inline-btn" onclick="openTodoModal()">+ Add</button>
+              </div>
             </div>
             <div id="todo-list-main">
               <div class="todo-empty-msg">No to-dos yet! Tap + Add or use voice 🎙️</div>
@@ -901,7 +901,7 @@ function renderToday(){
     `<div style="font-size:12px;font-weight:700;color:var(--text-3)">Free day tomorrow 🌟</div>`;
   const greetName=nonSchool.map(a=>a.name).join(' & ');
   document.getElementById('greeting-msg').textContent=greetName?`Hey! Xavier has ${greetName} today — let's go! 🚀`:`Hey! Free day for Xavier today — no extra activities! 🎉`;
-  renderSummary();
+  renderSummary();renderTodoMain();
   renderTodoList();renderTodoMain();
 }
 
