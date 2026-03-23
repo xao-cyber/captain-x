@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Captain X — Xavier's Schedule</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F2F6FC;--surface:#fff;--surface2:#EEF4FF;
-  --border:#C8DCF0;--border-strong:#A0C0E0;
-  --text:#0D1B2E;--text-2:#4A6FA5;--text-3:#8AABC8;
-  --purple:#3D8EE8;--purple-bg:#E8F2FF;--purple-light:#F0F7FF;
+  --bg:#EBF4FF;--surface:#fff;--surface2:#DCE9F8;
+  --border:#CCE0F0;--border-strong:#A8C8E8;
+  --text:#1A3A5C;--text-2:#4A6A88;--text-3:#7A9AB5;
+  --purple:#5B8DB8;--purple-bg:#DCE9F8;--purple-light:#EBF4FF;
   --pink:#E84393;--pink-bg:#FFE8F4;
   --teal:#00B894;--teal-bg:#E0FBF4;
   --orange:#E17055;--orange-bg:#FFF0EC;
   --yellow:#FDCB6E;--yellow-bg:#FFF9E6;
-  --blue:#0984E3;--blue-bg:#E8F4FF;
+  --blue:#5D8A9E;--blue-bg:#DCE9F8;
   --red:#D63031;--red-bg:#FFE8E8;
   --green:#00B894;--green-bg:#E0FBF4;
-  --radius:16px;--radius-sm:10px;--radius-xs:8px;
+  --radius:18px;--radius-sm:12px;--radius-xs:8px;
   --shadow:0 4px 20px rgba(108,92,231,.1);
   --shadow-card:0 8px 32px rgba(108,92,231,.12)
 }
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
 .app{max-width:1200px;margin:0 auto;padding:0 16px 100px}
 
 /* ── HEADER ── */
 .header{padding:20px 0 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
 .logo{display:flex;align-items:center;gap:10px}
-.logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(108,92,231,.3)}
+.logo-icon{width:44px;height:44px;background:#5B9DC8;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 12px rgba(108,92,231,.3)}
 .logo-text h1{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--text);letter-spacing:-.3px}
 .logo-text h1 span{font-style:italic;color:var(--purple)}
 .logo-text p{font-size:11px;color:var(--text-3);margin-top:1px}
@@ -41,21 +41,21 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 /* ── TABS ── */
 .tabs{display:flex;gap:4px;background:var(--surface);border-radius:var(--radius);padding:4px;margin-bottom:20px;width:fit-content;box-shadow:var(--shadow);border:1.5px solid var(--border)}
-.tab{padding:8px 20px;border-radius:12px;font-size:13px;font-weight:700;color:var(--text-3);cursor:pointer;transition:all .18s;border:none;background:none;font-family:'Nunito',sans-serif}
-.tab.active{background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;box-shadow:0 4px 12px rgba(108,92,231,.3)}
+.tab{padding:8px 20px;border-radius:16px;font-size:13px;font-weight:700;color:var(--text-3);cursor:pointer;transition:all .18s;border:none;background:none;font-family:'Nunito',sans-serif}
+.tab.active{background:#5B9DC8;color:white;box-shadow:0 4px 12px rgba(108,92,231,.3)}
 
 /* ── DATE HERO BANNER ── */
-.date-hero{background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-card)}
+.date-hero{background:linear-gradient(160deg,#EBF4FF,#D4E9F7);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;color:white;display:flex;align-items:center;justify-content:space-between;box-shadow:var(--shadow-card)}
 .date-hero-left{}
-.date-hero-day{font-size:11px;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.date-hero-date{font-size:26px;font-weight:700;color:white;letter-spacing:-.4px;line-height:1.1;margin-bottom:6px;font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+.date-hero-day{font-size:11px;font-weight:700;color:#4A7FA8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;font-family:'Baloo 2',sans-serif}
+.date-hero-date{font-size:28px;font-weight:800;color:#1A3A5C;letter-spacing:-.5px;line-height:1.1;margin-bottom:6px;font-family:'Baloo 2',system-ui,sans-serif}
 .date-hero-date span{font-style:italic;opacity:.85}
 .date-hero-sub{font-size:12px;opacity:.7;margin-top:4px}
 .date-hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
 .event-pill{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.3);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:700}
-.voice-mini-btn{background:linear-gradient(135deg,#FF6B35,#FF4FA0);color:white;border:none;border-radius:14px;padding:10px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(255,107,53,.3);transition:all .2s;min-width:160px;justify-content:center}
+.voice-mini-btn{background:linear-gradient(135deg,#E08040,#5B8DB8);color:white;border:none;border-radius:14px;padding:10px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(255,107,53,.3);transition:all .2s;min-width:160px;justify-content:center}
 .voice-mini-btn:hover{background:rgba(255,255,255,.25)}
-.voice-mini-btn.listening{background:linear-gradient(135deg,#FF3B30,#FF6B35);animation:pulse-glow .8s ease-in-out infinite;background:#FF3B30;border-color:#FF3B30;animation:pulse .8s ease-in-out infinite}
+.voice-mini-btn.listening{background:linear-gradient(135deg,#FF3B30,#E08040);animation:pulse-glow .8s ease-in-out infinite;background:#FF3B30;border-color:#FF3B30;animation:pulse .8s ease-in-out infinite}
 .voice-mini-btn.speaking{background:rgba(255,255,255,.3);animation:pulse 1.2s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
 
@@ -74,7 +74,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .event-time-ampm{font-size:10px;font-weight:700;color:var(--text-3);text-transform:uppercase}
 .event-time-sep{font-size:9px;color:var(--text-3);margin:2px 0}
 .event-time-end-sm{font-size:11px;font-weight:700;color:var(--text-2)}
-.event-emoji-wrap{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.event-emoji-wrap{width:40px;height:40px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .event-details{flex:1;min-width:0}
 .event-name{font-size:15px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .event-loc{font-size:12px;color:var(--text-2);margin-top:2px;display:flex;align-items:center;gap:4px}
@@ -102,15 +102,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 /* AI Panel */
 .ai-card{background:linear-gradient(135deg,#2D1B69,#4A1A8C);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow-card)}
 .ai-card-header{padding:14px 16px 10px;display:flex;align-items:center;gap:10px}
-.ai-avatar{width:36px;height:36px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ai-avatar{width:36px;height:36px;border-radius:16px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .ai-card-name{font-size:14px;font-weight:800;color:white}
 .ai-card-sub{font-size:11px;color:rgba(255,255,255,.6);margin-top:1px}
 .ai-messages{padding:10px 14px;min-height:80px;max-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
-.msg{padding:8px 11px;border-radius:12px;font-size:12px;line-height:1.5;max-width:92%}
+.msg{padding:8px 11px;border-radius:16px;font-size:12px;line-height:1.5;max-width:92%}
 .msg-ai{background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);align-self:flex-start;border-bottom-left-radius:3px}
 .msg-user{background:rgba(255,255,255,.25);color:white;align-self:flex-end;border-bottom-right-radius:3px}
 .ai-suggestions{padding:0 12px 8px;display:flex;flex-direction:column;gap:4px}
-.sug-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:6px 10px;font-size:11px;color:rgba(255,255,255,.8);text-align:left;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;transition:all .12s}
+.sug-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:6px 10px;font-size:11px;color:#4A6FA0;text-align:left;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:600;transition:all .12s}
 .sug-btn:hover{background:rgba(255,255,255,.2);color:white}
 .ai-input-row{padding:10px 12px;border-top:1px solid rgba(255,255,255,.1);display:flex;gap:6px;align-items:center}
 .ai-input{flex:1;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 10px;font-size:12px;font-family:'Nunito',sans-serif;background:rgba(255,255,255,.1);color:white;outline:none;font-weight:600}
@@ -158,9 +158,9 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .cost-strip-amt{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--teal)}
 
 /* ── TODAY SUB-TABS ── */
-.subtabs{display:flex;gap:3px;background:rgba(255,255,255,.7);border:2px solid var(--border);border-radius:12px;padding:3px;margin-bottom:14px;width:fit-content}
+.subtabs{display:flex;gap:3px;background:rgba(255,255,255,.7);border:2px solid var(--border);border-radius:16px;padding:3px;margin-bottom:14px;width:fit-content}
 .subtab{padding:8px 18px;border-radius:9px;font-size:13px;font-weight:800;color:var(--text-3);cursor:pointer;transition:all .18s;border:none;background:none;font-family:'Nunito',sans-serif;display:flex;align-items:center;gap:6px}
-.subtab.active{background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;box-shadow:0 2px 8px rgba(108,92,231,.3)}
+.subtab.active{background:#5B9DC8;color:white;box-shadow:0 2px 8px rgba(108,92,231,.3)}
 .subtab-badge{background:rgba(255,255,255,.9);color:var(--purple);font-size:10px;font-weight:900;padding:1px 6px;border-radius:99px}
 .subtab.active .subtab-badge{background:rgba(255,255,255,.3);color:white}
 
@@ -170,7 +170,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .todo-sub-tabs{display:flex;gap:4px}
 .todo-sub-tab{padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:none;font-size:11px;font-weight:800;color:var(--text-2);cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
 .todo-sub-tab.active{background:var(--purple);color:white;border-color:var(--purple)}
-.todo-add-inline-btn{background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;flex-shrink:0}
+.todo-add-inline-btn{background:#5B9DC8;color:white;border:none;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;flex-shrink:0}
 .todo-item-row{padding:11px 16px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px;transition:background .12s}
 .todo-item-row:last-child{border-bottom:none}
 .todo-item-row:hover{background:var(--bg)}
@@ -187,15 +187,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .todo-add-voice-hint{padding:8px 16px 12px;font-size:11px;color:var(--text-3);text-align:center;font-weight:600;font-style:italic}
 
 /* ── TODO SLIDE PANEL ── */
-.todo-toggle-btn{position:fixed;right:0;top:50%;transform:translateY(-50%);background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;border:none;border-radius:16px 0 0 16px;padding:14px 10px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;writing-mode:vertical-rl;text-orientation:mixed;z-index:150;box-shadow:-4px 0 16px rgba(108,92,231,.2);display:flex;align-items:center;gap:6px;transition:all .2s}
+.todo-toggle-btn{position:fixed;right:0;top:50%;transform:translateY(-50%);background:#5B9DC8;color:white;border:none;border-radius:16px 0 0 16px;padding:14px 10px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;writing-mode:vertical-rl;text-orientation:mixed;z-index:150;box-shadow:-4px 0 16px rgba(108,92,231,.2);display:flex;align-items:center;gap:6px;transition:all .2s}
 .todo-toggle-btn:hover{padding-right:14px}
 .todo-badge-float{background:#FF3B30;color:white;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;writing-mode:horizontal-tb}
 
 .todo-panel{display:block}
 .todo-panel.open{transform:translateX(0)}
-.todo-panel-header{background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);padding:20px 16px 16px;flex-shrink:0}
+.todo-panel-header{background:#5B9DC8;padding:20px 16px 16px;flex-shrink:0}
 .todo-panel-title{font-size:18px;font-weight:800;color:white;margin-bottom:4px}
-.todo-panel-sub{font-size:12px;color:rgba(255,255,255,.7)}
+.todo-panel-sub{font-size:12px;color:#4A6FA0}
 .todo-panel-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.2);border:none;color:white;width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 .todo-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);flex-shrink:0}
 .todo-tab{flex:1;padding:10px;font-size:12px;font-weight:700;color:var(--text-3);cursor:pointer;border:none;background:none;font-family:'Nunito',sans-serif;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s}
@@ -206,7 +206,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .todo-input-field:focus{border-color:var(--purple)}
 .todo-input-add{background:var(--purple);color:white;border:none;border-radius:var(--radius-xs);padding:8px 12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;white-space:nowrap;transition:all .15s}
 .todo-input-add:hover{background:#5A4BD4}
-.todo-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg);border-radius:12px;margin-bottom:6px;border:1.5px solid transparent;transition:all .15s}
+.todo-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg);border-radius:16px;margin-bottom:6px;border:1.5px solid transparent;transition:all .15s}
 .todo-item:hover{border-color:var(--border);background:var(--surface)}
 .todo-item-check{width:20px;height:20px;border:2px solid var(--border-strong);border-radius:6px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:800;margin-top:1px;transition:all .15s}
 .todo-item-check.done{background:var(--teal);border-color:var(--teal)}
@@ -225,14 +225,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .week-nav-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--text)}
 .week-nav-title span{font-style:italic;color:var(--purple)}
 .nav-arrows{display:flex;gap:6px}
-.arrow-btn{width:36px;height:36px;background:var(--surface);border:2px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);font-size:18px;font-weight:700;transition:all .15s}
+.arrow-btn{width:36px;height:36px;background:var(--surface);border:2px solid var(--border);border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);font-size:18px;font-weight:700;transition:all .15s}
 .arrow-btn:hover{border-color:var(--purple);color:var(--purple)}
 .week-grid{display:grid;grid-template-columns:54px repeat(7,1fr);background:var(--border);border:2px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
 .week-col-header{background:var(--surface);padding:10px 4px 8px;text-align:center;border-right:1px solid var(--border)}
 .week-col-header:last-child{border-right:none}
 .week-day-name{font-size:10px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
 .week-day-num{font-size:18px;font-weight:800;color:var(--text);margin-top:2px}
-.week-day-num.today-num{background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;width:28px;height:28px;border-radius:99px;display:flex;align-items:center;justify-content:center;margin:2px auto 0;font-size:14px}
+.week-day-num.today-num{background:#5B9DC8;color:white;width:28px;height:28px;border-radius:99px;display:flex;align-items:center;justify-content:center;margin:2px auto 0;font-size:14px}
 .time-col{background:var(--surface);border-right:1px solid var(--border)}
 .time-cell{height:52px;display:flex;align-items:flex-start;justify-content:flex-end;padding:4px 6px 0 0;font-size:9px;color:var(--text-3);border-bottom:1px solid var(--border);font-weight:700}
 .day-col{background:var(--surface);border-right:1px solid var(--border);position:relative}
@@ -265,7 +265,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .modal-actions{display:flex;gap:8px;margin-top:12px}
 .btn-cancel{flex:1;padding:11px;border:2px solid var(--border);border-radius:var(--radius-sm);background:none;font-size:13px;font-weight:800;color:var(--text-2);cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s}
 .btn-cancel:hover{border-color:var(--border-strong)}
-.btn-save{flex:2;padding:11px;background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 12px rgba(108,92,231,.3)}
+.btn-save{flex:2;padding:11px;background:#5B9DC8;color:white;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;box-shadow:0 4px 12px rgba(108,92,231,.3)}
 .btn-delete{flex:1;padding:11px;background:var(--red-bg);color:var(--red);border:2px solid #FFB3B3;border-radius:var(--radius-sm);font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
 .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .type-opt{border:2px solid var(--border);border-radius:var(--radius-sm);padding:10px 4px 8px;cursor:pointer;font-size:10px;font-weight:800;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--text-2);text-align:center;background:var(--bg)}
@@ -298,7 +298,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .confirm-modal{background:var(--surface);border-radius:20px;padding:28px;width:360px;max-width:100%;box-shadow:0 20px 60px rgba(26,22,64,.2);text-align:center}
 
 /* FAB */
-.add-btn{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2B7FD4,#3D8EE8,#5BA8F5);color:white;border:none;border-radius:99px;padding:14px 28px;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(108,92,231,.4);z-index:100;transition:all .2s}
+.add-btn{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#5B9DC8;color:white;border:none;border-radius:99px;padding:14px 28px;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 8px 24px rgba(108,92,231,.4);z-index:100;transition:all .2s}
 .add-btn:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 12px 32px rgba(108,92,231,.5)}
 
 .voice-toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:rgba(26,22,64,.95);color:white;padding:10px 20px;border-radius:99px;font-size:12px;font-weight:700;pointer-events:none;opacity:0;transition:opacity .25s;z-index:300;white-space:nowrap;max-width:90vw}
@@ -317,11 +317,11 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 
 /* ── TODO SUB PANEL FIX ── */
 .todo-sub-panel{background:var(--surface);border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--border)}
-.todo-sub-header{padding:10px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#F5F9FF}
+.todo-sub-header{padding:10px 14px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#EBF4FF}
 .todo-sub-tabs{display:flex;gap:4px}
 .todo-sub-tab{padding:5px 10px;border-radius:7px;border:1.5px solid var(--border);background:none;font-size:11px;font-weight:800;color:var(--text-2);cursor:pointer;font-family:inherit}
-.todo-sub-tab.active{background:#3D8EE8;color:white;border-color:#3D8EE8}
-.todo-add-inline-btn{background:#3D8EE8;color:white;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit}
+.todo-sub-tab.active{background:#5B9DC8;color:white;border-color:#5B8DB8}
+.todo-add-inline-btn{background:#5B9DC8;color:white;border:none;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:800;cursor:pointer;font-family:inherit}
 .todo-item-row{padding:10px 14px;border-bottom:1.5px solid #F2F6FC;display:flex;align-items:center;gap:8px}
 .todo-item-row:last-child{border-bottom:none}
 .todo-checkbox{width:20px;height:20px;border:2px solid var(--border);border-radius:6px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:800;transition:all .15s}
@@ -341,7 +341,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <!-- HEADER -->
   <div class="header">
     <div class="logo">
-      <div class="logo-icon">🦸</div>
+      <div class="logo-icon" style="background:linear-gradient(135deg,#7AAFD4,#5B8DB8);box-shadow:0 4px 12px rgba(33,150,243,.3)">🦸</div>
       <div class="logo-text">
         <h1>Captain <span>X</span></h1>
         <p id="save-indicator">Xavier's mission control · Loading...</p>
@@ -385,33 +385,34 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
         <!-- Schedule panel - always visible -->
         <div id="subview-schedule">
           <div class="events-list" id="today-events"></div>
-          <div class="tomorrow-card">
+          <div class="tomorrow-card" style="background:white;border-radius:16px;border:2px solid #D6E4F5;padding:12px 16px;margin-bottom:14px">
             <div class="tomorrow-label">Tomorrow</div>
             <div class="tom-pills" id="tomorrow-events"></div>
           </div>
         </div>
 
         <!-- To-Do panel -->
-        <!-- Xavier To-Do List - always visible below schedule -->
-        <div id="subview-todo" style="margin-top:12px">
-          <div class="todo-sub-panel">
-            <div class="todo-sub-header">
-              <div style="display:flex;align-items:center;gap:6px">
+        </div>
+        </div>
+
+        <!-- Xavier To-Do List below schedule -->
+        <div style="margin-top:14px">
+          <div style="background:white;border-radius:14px;border:1px solid #D6E4F5;overflow:hidden">
+            <div style="padding:12px 16px;border-bottom:1px solid #D6E4F5;background:#EBF4FF;display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:7px">
                 <span style="font-size:14px">✅</span>
-                <span style="font-size:12px;font-weight:800;color:var(--text)">Xavier's To-Do List</span>
-                <span id="todo-subtab-badge" style="background:#3D8EE8;color:white;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;display:none">0</span>
+                <span style="font-size:13px;font-weight:800;color:#1A1C20">Xavier's To-Do List</span>
+                <span id="todo-subtab-badge" style="background:#5B9DC8;color:white;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;display:none">0</span>
               </div>
-              <div style="display:flex;gap:6px;align-items:center">
-                <div style="display:flex;gap:3px">
-                  <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
-                  <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
-                  <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
-                </div>
+              <div style="display:flex;align-items:center;gap:5px">
+                <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
+                <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
+                <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
                 <button class="todo-add-inline-btn" onclick="openTodoModal()">+ Add</button>
               </div>
             </div>
             <div id="todo-list-main">
-              <div class="todo-empty-msg">No to-dos yet! Tap + Add or use voice 🎙️</div>
+              <div class="todo-empty-msg">No to-dos yet! Xavier can add by voice 🎙️</div>
             </div>
           </div>
         </div>
@@ -465,7 +466,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
             <div class="card-title">📋 All Activities <span class="badge-count" style="background:var(--purple)" id="summary-count">0</span></div>
           </div>
           <div class="summary-list" id="summary-list"></div>
-          <div id="cost-panel" style="background:linear-gradient(135deg,#E8F8F2,#F0FFF8);border-top:1.5px solid rgba(0,184,148,.2);padding:12px 16px">
+          <div id="cost-panel" style="background:#F3FAF7;border-top:1.5px solid rgba(0,184,148,.2);padding:12px 16px">
               <div style="font-size:10px;font-weight:800;color:#00A870;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">💰 Weekly Cost</div>
               <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
                 <span id="cost-strip-amt" style="font-size:22px;font-weight:700;color:#00A870;letter-spacing:-.5px">$0</span>
@@ -510,26 +511,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <span class="todo-badge-float" id="todo-float-badge" style="display:none">0</span>
   ✅ To-Dos
 </button>
-<div class="todo-overlay" id="todo-overlay" onclick="closeTodoPanel()"></div>
-<div class="todo-panel" id="todo-panel">
-  <div class="todo-panel-header" style="position:relative">
-    <div class="todo-panel-title">✅ Xavier's To-Dos</div>
-    <div class="todo-panel-sub">Daily & weekly tasks</div>
-    <button class="todo-panel-close" onclick="closeTodoPanel()">✕</button>
-  </div>
-  <div class="todo-tabs">
-    <button class="todo-tab active" id="ttab-daily" onclick="switchTodoTab('daily')">📆 Daily</button>
-    <button class="todo-tab" id="ttab-weekly" onclick="switchTodoTab('weekly')">🗓 Weekly</button>
-    <button class="todo-tab" id="ttab-done" onclick="switchTodoTab('done')">✅ Done</button>
-  </div>
-  <div class="todo-body">
-    <div class="todo-add-row" id="todo-add-row">
-      <input class="todo-input-field" id="todo-input-field" placeholder="Add a task..." onkeydown="if(event.key==='Enter')addTodoFromInput()"/>
-      <button class="todo-input-add" onclick="addTodoFromInput()">+ Add</button>
-    </div>
-    <div id="todo-items-list"></div>
-  </div>
-</div>
+
+
 
 <!-- FAB -->
 <button class="add-btn" onclick="openModal()">
@@ -670,7 +653,7 @@ const TYPES=[
   {id:'minichef',  emoji:'👨‍🍳',label:'Mini Chef',    color:'#D4410B',bg:'#FEF0EA',border:'#F5B89A',gear:['Apron']},
   {id:'swimming',  emoji:'🏊',label:'Swimming',     color:'#0E8A8A',bg:'#E4F7F7',border:'#8ED8D8',gear:['Swimsuit','Goggles','Towel','Cap']},
   {id:'russianmath',emoji:'🔢',label:'Russian Math',color:'#1B5EA6',bg:'#E6EEF9',border:'#90B4E0',gear:['Notebook','Pencil']},
-  {id:'custom',    emoji:'✨',label:'Custom',       color:'#3D8EE8',bg:'#E8F2FF',border:'#C8C0FF',gear:[]},
+  {id:'custom',    emoji:'✨',label:'Custom',       color:'#5B8DB8',bg:'#DCE9F8',border:'#C8C0FF',gear:[]},
 ];
 const COLORS=['#E74C3C','#E67E22','#F1C40F','#27AE60','#1ABC9C','#3498DB','#9B59B6','#E91E63','#FF5722','#607D8B'];
 const DEFAULT_ACTIVITIES=[
@@ -867,13 +850,13 @@ function renderSummary(){
         const pct=total>0?Math.round((grp.subtotal/total)*100):0;
         const row=document.createElement('div');
         row.style.cssText='display:flex;align-items:center;gap:7px;font-size:11px;padding:4px 0;border-bottom:1px solid rgba(0,184,148,.15)';
-        row.innerHTML=`<div style="width:7px;height:7px;border-radius:50%;background:${ti.color};flex-shrink:0"></div><div style="flex:1;font-weight:700;color:#4A6FA5">${ti.emoji} ${ti.label}</div><div style="font-size:10px;color:#8AABC8;min-width:28px;text-align:right">${pct}%</div><div style="font-weight:800;color:#0D1B2E;min-width:42px;text-align:right">$${grp.subtotal.toFixed(2)}</div>`;
+        row.innerHTML=`<div style="width:7px;height:7px;border-radius:50%;background:${ti.color};flex-shrink:0"></div><div style="flex:1;font-weight:700;color:#4A6FA5">${ti.emoji} ${ti.label}</div><div style="font-size:10px;color:#8BA5BF;min-width:28px;text-align:right">${pct}%</div><div style="font-weight:800;color:#0D1B2E;min-width:42px;text-align:right">$${grp.subtotal.toFixed(2)}</div>`;
         rowsEl.appendChild(row);
         if(grp.items.length>1){
           grp.items.forEach(a=>{
             const sub=document.createElement('div');
             sub.style.cssText='display:flex;align-items:center;gap:7px;font-size:10px;padding:2px 0 2px 14px';
-            sub.innerHTML=`<div style="flex:1;color:#8AABC8;font-weight:600">${a.name}${a.format==='private'?' ⭐':''}</div><div style="color:#8AABC8;font-weight:700">$${parseFloat(a.cost).toFixed(2)}</div>`;
+            sub.innerHTML=`<div style="flex:1;color:#8BA5BF;font-weight:600">${a.name}${a.format==='private'?' ⭐':''}</div><div style="color:#8BA5BF;font-weight:700">$${parseFloat(a.cost).toFixed(2)}</div>`;
             rowsEl.appendChild(sub);
           });
         }
@@ -1304,7 +1287,7 @@ function exportWeekPDF(){
     return`<td style="vertical-align:top;padding:6px;width:14.28%;border-right:1px solid #eee"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:3px">${d.slice(0,3)}</div><div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px">${dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>${cells||'<div style="font-size:10px;color:#ccc">—</div>'}</td>`;
   });
   const total=activities.filter(a=>a.cost>0).reduce((s,a)=>s+parseFloat(a.cost),0);
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial,sans-serif;padding:20px;color:#333}h1{font-size:20px;margin-bottom:4px}table{width:100%;border-collapse:collapse}td{border-bottom:1px solid #eee}@media print{@page{margin:.5cm;size:A4 landscape}}</style></head><body><h1>🦸 Captain X — Xavier's Schedule</h1><p style="font-size:11px;color:#999;margin-bottom:16px">Week of ${weekLabel} · Printed ${now.toLocaleDateString()}</p><table><tbody><tr>${cols.join('')}</tr></tbody></table>${total>0?`<div style="margin-top:14px;padding:10px;background:#E0FBF4;border-radius:8px;font-size:12px;color:#00B894;font-weight:700">💰 Weekly total: $${total.toFixed(2)} · ≈ $${(total*4.33).toFixed(0)}/month</div>`:''}</body></html>`;
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body><h1>🦸 Captain X — Xavier's Schedule</h1><p style="font-size:11px;color:#999;margin-bottom:16px">Week of ${weekLabel} · Printed ${now.toLocaleDateString()}</p><table><tbody><tr>${cols.join('')}</tr></tbody></table>${total>0?`<div style="margin-top:14px;padding:10px;background:#E0FBF4;border-radius:8px;font-size:12px;color:#00B894;font-weight:700">💰 Weekly total: $${total.toFixed(2)} · ≈ $${(total*4.33).toFixed(0)}/month</div>`:''}</body></html>`;
   const win=window.open('','_blank','width=1000,height=750');
   if(!win){showToast('Allow pop-ups to save PDF');return;}
   win.document.write(html);win.document.close();setTimeout(()=>{win.focus();win.print();},700);
@@ -1351,5 +1334,298 @@ async function init(){
 }
 init();
 </script>
+</body>
+</html>
+      <button class="hbtn" id="lock-btn" onclick="promptPassword()">🔒 View only</button>
+      <button class="hbtn" onclick="openModal()">＋ Add Activity</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" id="tab-today" onclick="switchTab('today')">📅 Today</button>
+    <button class="tab" id="tab-week" onclick="switchTab('week')">🗓 This Week</button>
+  </div>
+
+  <!-- TODAY VIEW -->
+  <div id="view-today">
+    <!-- Date Hero -->
+    <div class="date-hero">
+      <div class="date-hero-left">
+        <div class="date-hero-day" id="hero-day">Monday</div>
+        <div class="date-hero-date"><span id="hero-date">March 24</span></div>
+        <div class="date-hero-sub" id="hero-sub">Loading schedule...</div>
+      </div>
+      <div class="date-hero-right">
+        <div class="event-pill" id="hero-pill">0 activities</div>
+        <button class="voice-mini-btn" id="xavier-voice-btn" onclick="toggleXavierVoice()">
+          <span>🎙️</span>
+          <span id="v-label-main">Hey Xavier!</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="today-layout">
+      <!-- Events -->
+      <div class="events-col">
+        <!-- Sub-tabs: Schedule | To-Do -->
+        <!-- Schedule panel - always visible -->
+        <div id="subview-schedule">
+          <div class="events-list" id="today-events"></div>
+          <div class="tomorrow-card" style="background:white;border-radius:16px;border:2px solid #D6E4F5;padding:12px 16px;margin-bottom:14px">
+            <div class="tomorrow-label">Tomorrow</div>
+            <div class="tom-pills" id="tomorrow-events"></div>
+          </div>
+        </div>
+
+        <!-- To-Do panel -->
+        </div>
+        </div>
+
+        <!-- Xavier To-Do List below schedule -->
+        <div style="margin-top:14px">
+          <div style="background:white;border-radius:14px;border:1px solid #D6E4F5;overflow:hidden">
+            <div style="padding:12px 16px;border-bottom:1px solid #D6E4F5;background:#EBF4FF;display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:7px">
+                <span style="font-size:14px">✅</span>
+                <span style="font-size:13px;font-weight:800;color:#1A1C20">Xavier's To-Do List</span>
+                <span id="todo-subtab-badge" style="background:#5B9DC8;color:white;font-size:10px;font-weight:800;padding:1px 7px;border-radius:99px;display:none">0</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:5px">
+                <button class="todo-sub-tab active" onclick="switchTodoView('xavier')">👦 Xavier</button>
+                <button class="todo-sub-tab" onclick="switchTodoView('parent')">👨 Parent</button>
+                <button class="todo-sub-tab" onclick="switchTodoView('all')">📋 All</button>
+                <button class="todo-add-inline-btn" onclick="openTodoModal()">+ Add</button>
+              </div>
+            </div>
+            <div id="todo-list-main">
+              <div class="todo-empty-msg">No to-dos yet! Xavier can add by voice 🎙️</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- AI Panel -->
+        <div class="ai-card">
+          <div class="ai-card-header">
+            <div class="ai-avatar">🤖</div>
+            <div>
+              <div class="ai-card-name">Captain X AI</div>
+              <div class="ai-card-sub">Ask anything about Xavier's schedule</div>
+            </div>
+          </div>
+          <div class="ai-messages" id="ai-messages">
+            <div class="msg msg-ai" id="greeting-msg">Loading...</div>
+          </div>
+          <div class="ai-suggestions" id="ai-suggestions">
+            <button class="sug-btn" onclick="askAI('What does this week look like?')">📅 What does this week look like?</button>
+            <button class="sug-btn" onclick="askAI('What gear does Xavier need today?')">🎒 What gear does Xavier need today?</button>
+            <button class="sug-btn" onclick="askAI('How much are we spending weekly?')">💰 How much are we spending weekly?</button>
+          </div>
+          <div class="ai-input-row">
+            <input class="ai-input" id="ai-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendAI()"/>
+            <button class="mic-btn" id="mic-btn" onclick="toggleMicInput()">
+              <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3zm-1 14.93A7.001 7.001 0 0 1 5 11H3a9 9 0 0 0 8 8.94V22h2v-2.06A9 9 0 0 0 21 11h-2a7 7 0 0 1-6 6.93z"/></svg>
+            </button>
+            <button class="ai-send" onclick="sendAI()">
+              <svg viewBox="0 0 16 16"><path d="M14 8L2 2l2 6-2 6 12-6z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="alerts-card">
+          <div class="card-header">
+            <div class="card-title">🎒 Prep Reminders <span class="badge-count" id="alert-badge">2</span></div>
+          </div>
+          <div id="alert-list">
+            <div class="alert-row"><div class="alert-icon-box" style="background:#E8F2FB">🏒</div><div class="alert-text-block"><div class="alert-title">Pack hockey gear</div><div class="alert-sub">Skates, helmet, gloves, stick</div></div><div class="check-circle" onclick="toggleAlertDone(this)"></div></div>
+            <div class="alert-row"><div class="alert-icon-box" style="background:#E6F4EC">🤺</div><div class="alert-text-block"><div class="alert-title">Pack fencing gear</div><div class="alert-sub">Mask, jacket, glove, foil</div></div><div class="check-circle" onclick="toggleAlertDone(this)"></div></div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="summary-card">
+          <div class="card-header">
+            <div class="card-title">📋 All Activities <span class="badge-count" style="background:var(--purple)" id="summary-count">0</span></div>
+          </div>
+          <div class="summary-list" id="summary-list"></div>
+          <div id="cost-panel" style="background:#F3FAF7;border-top:1.5px solid rgba(0,184,148,.2);padding:12px 16px">
+              <div style="font-size:10px;font-weight:800;color:#00A870;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">💰 Weekly Cost</div>
+              <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+                <span id="cost-strip-amt" style="font-size:22px;font-weight:700;color:#00A870;letter-spacing:-.5px">$0</span>
+                <span style="font-size:11px;color:#00A870;opacity:.7">/week</span>
+              </div>
+              <div id="cost-breakdown-rows"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK VIEW -->
+  <div id="view-week">
+    <div class="week-nav">
+      <div class="week-nav-title" id="week-title">Week of <span>—</span></div>
+      <div class="nav-arrows">
+        <button class="arrow-btn" onclick="changeWeek(-1)">‹</button>
+        <button class="arrow-btn" onclick="changeWeek(1)">›</button>
+      </div>
+    </div>
+    <div class="week-grid" id="week-grid"></div>
+    <div class="week-legend" id="week-legend"></div>
+    <div class="week-cost-bar" id="week-cost-bar" style="display:none">
+      <div>
+        <div style="font-size:11px;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">💰 Weekly Activity Cost</div>
+        <div style="display:flex;align-items:baseline;gap:8px">
+          <span style="font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal)" id="week-total-amt">$0</span>
+          <span style="font-size:12px;color:var(--text-2)" id="week-total-mo"></span>
+        </div>
+      </div>
+      <button class="pdf-btn" onclick="exportWeekPDF()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5z"/></svg>
+        Save week as PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TODO SLIDE PANEL -->
+<button class="todo-toggle-btn" id="todo-toggle-btn" onclick="toggleTodoPanel()">
+  <span class="todo-badge-float" id="todo-float-badge" style="display:none">0</span>
+  ✅ To-Dos
+</button>
+<div class="todo-overlay" id="todo-overlay" onclick="closeTodoPanel()"></div>
+
+
+<!-- FAB -->
+<button class="add-btn" onclick="openModal()">
+  <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 2v12M2 8h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>
+  Add Activity
+</button>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-title" id="modal-title-txt">Add <span>activity</span></div>
+    <div class="form-row">
+      <label class="form-label">Activity Type</label>
+      <div class="type-grid" id="type-grid"></div>
+      <div id="custom-box" class="custom-box" style="display:none">
+        <label class="form-label" style="margin-bottom:5px">Custom name</label>
+        <input class="form-input" id="custom-name-input" placeholder="e.g. Piano, Drama..."/>
+        <label class="form-label" style="margin-top:8px;margin-bottom:4px">Pick a color</label>
+        <div class="color-row" id="color-row"></div>
+      </div>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="form-row">
+      <label class="form-label">Label <span style="font-weight:600;text-transform:none;font-size:10px;color:var(--text-3)">(optional)</span></label>
+      <input class="form-input" id="f-name" placeholder="Leave blank to use type name"/>
+    </div>
+    <div class="form-row">
+      <label class="form-label">Lesson Format</label>
+      <div class="format-row">
+        <div class="fmt-opt sel" data-fmt="group" onclick="selectFmt('group')">👥 Group</div>
+        <div class="fmt-opt" data-fmt="private" onclick="selectFmt('private')">⭐ Private</div>
+        <div class="fmt-opt" data-fmt="general" onclick="selectFmt('general')">📅 General</div>
+      </div>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="form-row-3">
+      <div><label class="form-label">Day</label>
+        <select class="form-input" id="f-day">
+          <option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option>
+          <option value="3">Thursday</option><option value="4">Friday</option><option value="5">Saturday</option><option value="6">Sunday</option>
+        </select>
+      </div>
+      <div><label class="form-label">From</label><input class="form-input" id="f-start-time" type="time" value="15:30"/></div>
+      <div><label class="form-label">To</label><input class="form-input" id="f-end-time" type="time" value="16:30"/></div>
+    </div>
+    <div class="form-row-2">
+      <div><label class="form-label">Location</label><input class="form-input" id="f-loc" placeholder="e.g. Iceworld Arena"/></div>
+      <div>
+        <label class="form-label">Cost per session</label>
+        <div class="cost-input-wrap"><span class="currency">$</span><input class="form-input" id="f-cost" type="number" min="0" step="0.01" placeholder="0.00"/></div>
+      </div>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="form-row">
+      <label class="form-label">Schedule Type</label>
+      <div class="recur-row">
+        <div class="recur-opt sel" data-recur="weekly" onclick="selectRecur('weekly')">🔁 Repeats weekly</div>
+        <div class="recur-opt" data-recur="daterange" onclick="selectRecur('daterange')">📆 Date range</div>
+        <div class="recur-opt" data-recur="once" onclick="selectRecur('once')">1️⃣ One time</div>
+      </div>
+      <div class="date-fields hidden" id="daterange-fields">
+        <div><label class="form-label" style="margin-top:8px">Start Date</label><input class="form-input" id="f-start" type="date"/></div>
+        <div><label class="form-label" style="margin-top:8px">End Date</label><input class="form-input" id="f-end" type="date"/></div>
+      </div>
+      <div id="once-field" style="display:none;margin-top:8px">
+        <label class="form-label">Date</label><input class="form-input" id="f-once" type="date"/>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-delete" id="modal-delete-btn" style="display:none" onclick="deleteEditingActivity()">🗑 Delete</button>
+      <button class="btn-save" onclick="saveEvent()">Save Activity</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detail-overlay" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal">
+    <div class="detail-hero">
+      <div class="detail-emoji-big" id="d-emoji">🏒</div>
+      <div><div class="detail-title" id="d-title">Event</div><div class="detail-sub" id="d-subtitle"></div></div>
+    </div>
+    <div id="d-rows"></div>
+    <div class="modal-actions" style="margin-top:16px">
+      <button class="btn-cancel" onclick="closeDetail()">Close</button>
+      <button class="btn-save" style="background:var(--purple)" onclick="editFromDetail()">✏️ Edit</button>
+      <button class="btn-delete" onclick="deleteFromDetail()">🗑 Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE -->
+<div class="modal-overlay" id="confirm-overlay" onclick="if(event.target===this)closeConfirm()">
+  <div class="confirm-modal">
+    <div style="font-size:40px;margin-bottom:12px">🗑️</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:8px" id="confirm-title">Delete this?</div>
+    <div style="font-size:13px;color:var(--text-2);margin-bottom:20px;font-weight:600" id="confirm-body">This cannot be undone.</div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Keep it</button>
+      <button class="btn-delete" onclick="confirmDelete()">Yes, delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="share-overlay" onclick="if(event.target===this)document.getElementById('share-overlay').classList.remove('open')">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-title">Share <span>Captain X</span></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:var(--teal-bg);border:2px solid rgba(0,184,148,.3);border-radius:var(--radius-sm);padding:14px">
+        <div style="font-size:13px;font-weight:800;color:var(--teal);margin-bottom:5px">✅ Share your live URL</div>
+        <div style="font-size:12px;color:var(--text-2);font-weight:600;line-height:1.6">Send your Netlify link to anyone — they see Xavier's live schedule. Password protects editing.</div>
+        <div id="share-url-display" style="margin-top:8px;background:var(--surface);border-radius:8px;padding:8px 10px;font-size:11px;word-break:break-all;font-weight:700;color:var(--purple)"></div>
+      </div>
+      <div style="background:var(--purple-light);border:2px solid var(--border);border-radius:var(--radius-sm);padding:14px">
+        <div style="font-size:13px;font-weight:800;color:var(--purple);margin-bottom:5px">🔒 Edit password</div>
+        <div style="font-size:12px;color:var(--text-2);font-weight:600;line-height:1.6">Current password: <code style="background:var(--surface);padding:2px 6px;border-radius:5px">captainx2025</code><br/>Tell this only to people you want editing.</div>
+      </div>
+    </div>
+    <button class="btn-cancel" style="margin-top:14px;width:100%" onclick="document.getElementById('share-overlay').classList.remove('open')">Got it</button>
+  </div>
+</div>
+
+<div class="voice-toast" id="voice-toast"></div>
+
+
 </body>
 </html>
