@@ -1548,7 +1548,6 @@ function isTodoCmd(text){
 }
 
 let isXavListening=false;
-let isMicListen=false;
 function toggleXavierVoice(){
   if(synth&&synth.speaking){synth.cancel();setVS('idle');return;}
   if(isXavListening){if(recognition)recognition.stop();return;}
@@ -1618,146 +1617,6 @@ function toggleMicInput(){
 }
 
 let toastT=null;
-// ── Sub-tab switching ──
-let currentSubTab='schedule';
-let currentTodoView='all';
-
-function switchSubTab(tab){
-  currentSubTab=tab;
-  document.getElementById('subtab-schedule').classList.toggle('active',tab==='schedule');
-  document.getElementById('subtab-todo').classList.toggle('active',tab==='todo');
-  document.getElementById('subview-schedule').style.display=tab==='schedule'?'block':'none';
-  document.getElementById('subview-todo').style.display=tab==='todo'?'block':'none';
-  if(tab==='todo') renderTodoMain();
-}
-
-function switchTodoView(view){
-  currentTodoView=view;
-  document.querySelectorAll('.todo-sub-tab').forEach((el,i)=>{
-    el.classList.toggle('active',['xavier','parent','all'][i]===view);
-  });
-  renderTodoMain();
-}
-
-function renderTodoMain(){
-  const container=document.getElementById('todo-list-main');
-  if(!container) return;
-  let filtered=todos;
-  if(currentTodoView==='xavier') filtered=todos.filter(t=>t.who==='xavier');
-  if(currentTodoView==='parent') filtered=todos.filter(t=>t.who==='parent');
-  const badge=document.getElementById('todo-subtab-badge');
-  const active=todos.filter(t=>!t.done).length;
-  if(badge){badge.textContent=active;badge.style.display=active>0?'inline':'none';}
-  if(!filtered.length){
-    container.innerHTML='<div class="todo-empty-msg">No to-dos here!</div><div class="todo-add-voice-hint">Xavier can say "Add homework to my list" 🎙️</div>';
-    return;
-  }
-  container.innerHTML='';
-  filtered.forEach((t)=>{
-    const realIdx=todos.indexOf(t);
-    const div=document.createElement('div');div.className='todo-item-row';
-    div.innerHTML=`<div class="todo-checkbox${t.done?' done':''}" onclick="toggleTodo(${realIdx})">${t.done?'✓':''}</div><div class="todo-item-text${t.done?' done':''}">${t.text}</div><span class="todo-who-badge tw-${t.who==='xavier'?'x':'p'}">${t.who==='xavier'?'👦 Xavier':'👨 Parent'}</span><button class="todo-del-btn" onclick="deleteTodo(${realIdx})">×</button>`;
-    container.appendChild(div);
-  });
-}
-
-function showToast(m){const t=document.getElementById('voice-toast');t.textContent=m;t.classList.add('show');if(toastT)clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2800);}
-
-// ── AI Chat (type or mic) ──
-function buildCtx(){
-  let ctx="Xavier's schedule:\n";
-  DAYS.forEach((d,i)=>{const acts=activities.filter(a=>a.day===i);if(acts.length){ctx+=`${d}: `;ctx+=acts.map(a=>`${a.name} (${m2t(t2m(a.time))}${a.endTime?' to '+m2t(t2m(a.endTime)):''}, ${a.location}${a.cost>0?', $'+a.cost:''}, ${a.format}, ${a.recur})`).join('; ');ctx+='\n';}});
-  const td=todos.filter(t=>!t.done).map(t=>t.text);if(td.length)ctx+=`\nTo-dos: ${td.join(', ')}`;
-  ctx+=`\nToday is ${DAYS[getToday()]}, ${new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}.`;
-  return ctx;
-}
-function addMsg(text,isUser){
-  const msgs=document.getElementById('ai-messages');
-  document.getElementById('ai-suggestions').style.display='none';
-  const el=document.createElement('div');el.className=`msg msg-${isUser?'user':'ai'}`;el.textContent=text;
-  msgs.appendChild(el);msgs.scrollTop=msgs.scrollHeight;
-}
-async function getAIReply(q){
-  aiHistory.push({role:'user',content:q});
-  const sys=`You are Captain X AI — fun, energetic assistant for 8-year-old Xavier and his parent. Know Xavier's full schedule. Be exciting, use his name, keep to 2-3 sentences. Schedule:\n\n${buildCtx()}`;
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:sys,messages:aiHistory})});
-    const data=await res.json();
-    const r=data.content?.map(c=>c.text||'').join('')||null;
-    if(r){aiHistory.push({role:'assistant',content:r});return r;}
-    // Fallback to smart reply
-    return smartReply(q)||"Great question! Check the schedule above for details 📅";
-  }catch(e){return smartReply(q)||"I couldn't connect but check the schedule above! 📅";}
-}
-async function askAI(q){document.getElementById('ai-input').value=q;await sendAI();}
-async function sendAI(){
-  const inp=document.getElementById('ai-input'),q=inp.value.trim();if(!q)return;
-  inp.value='';addMsg(q,true);
-  const msgs=document.getElementById('ai-messages');
-  const tp=document.createElement('div');tp.className='msg msg-ai';tp.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';
-  msgs.appendChild(tp);msgs.scrollTop=msgs.scrollHeight;
-  const r=await getAIReply(q);tp.innerHTML='';tp.textContent=r;msgs.scrollTop=msgs.scrollHeight;
-}
-
-// ── PDF Export ──
-function exportWeekPDF(){
-  const now=new Date(),dow=now.getDay()===0?6:now.getDay()-1;
-  const mon=new Date(now);mon.setDate(now.getDate()-dow+(weekOffset*7));
-  const weekLabel=mon.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  const cols=DAYS.map((d,i)=>{
-    const dt=new Date(mon);dt.setDate(mon.getDate()+i);
-    const acts=activities.filter(a=>a.day===i).sort((a,b)=>t2m(a.time)-t2m(b.time));
-    const cells=acts.map(a=>{const ti=getType(a.type);return`<div style="margin-bottom:5px;padding:5px 7px;border-radius:5px;background:${ti.bg};border-left:3px solid ${ti.color}"><div style="font-size:10px;font-weight:700;color:${ti.color}">${ti.emoji} ${a.name}</div><div style="font-size:9px;color:#555">${m2t(t2m(a.time))}${a.endTime?' – '+m2t(t2m(a.endTime)):''}</div>${a.format==='private'?'<div style="font-size:8px;color:#C47D0E;font-weight:700">⭐ PRIVATE</div>':''}<div style="font-size:9px;color:#888">📍 ${a.location}</div>${a.cost>0?`<div style="font-size:9px;color:#00B894;font-weight:700">💰 ${fmtCost(a.cost)}</div>`:''}</div>`;}).join('');
-    return`<td style="vertical-align:top;padding:6px;width:14.28%;border-right:1px solid #eee"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:#999;margin-bottom:3px">${d.slice(0,3)}</div><div style="font-size:11px;font-weight:700;color:#333;margin-bottom:6px">${dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>${cells||'<div style="font-size:10px;color:#ccc">—</div>'}</td>`;
-  });
-  const total=activities.filter(a=>a.cost>0).reduce((s,a)=>s+parseFloat(a.cost),0);
-  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body><h1>🦸 Captain X — Xavier's Schedule</h1><p style="font-size:11px;color:#999;margin-bottom:16px">Week of ${weekLabel} · Printed ${now.toLocaleDateString()}</p><table><tbody><tr>${cols.join('')}</tr></tbody></table>${total>0?`<div style="margin-top:14px;padding:10px;background:#E0FBF4;border-radius:8px;font-size:12px;color:#00B894;font-weight:700">💰 Weekly total: $${total.toFixed(2)} · ≈ $${(total*4.33).toFixed(0)}/month</div>`:''}</body></html>`;
-  const win=window.open('','_blank','width=1000,height=750');
-  if(!win){showToast('Allow pop-ups to save PDF');return;}
-  win.document.write(html);win.document.close();setTimeout(()=>{win.focus();win.print();},700);
-}
-
-// ── Share URL ──
-function showShareUrl(){
-  const url=window.location.href.split('?')[0];
-  const el=document.getElementById('share-url-display');
-  el.textContent=url;
-}
-
-// ── Auto-sync (every 20 seconds) ──
-function startAutoSync(){
-  setInterval(async()=>{
-    if(isSyncing)return;
-    try{
-      const res=await fetch(FIREBASE_URL+'/captainx.json');
-      if(res.ok){
-        const d=await res.json();
-        if(d&&d.activities&&JSON.stringify(d.activities)!==JSON.stringify(activities)){
-          activities=d.activities;
-          todos=Array.isArray(d.todos)?d.todos:[];
-          customTypes=Array.isArray(d.customTypes)?d.customTypes:[];
-          renderToday();renderTodoList();
-          if(document.getElementById('tab-week').classList.contains('active'))renderWeek();
-          showToast('🔄 Schedule updated!');
-        }
-      }
-    }catch(e){}
-  },20000);
-}
-
-// ── Init ──
-async function init(){
-  await loadData();
-  buildTypeGrid('hockey');buildColorRow();
-  checkEditor();
-  renderToday();
-  showShareUrl();
-  startAutoSync();
-  if(synth){synth.getVoices();synth.onvoiceschanged=()=>synth.getVoices();}
-}
-init();
-
-
 // ━━━ OVERRIDE renderToday for new layout ━━━
 const _origRenderToday = renderToday;
 renderToday = function() {
@@ -1931,6 +1790,69 @@ function renderTodoMain() {
     container.appendChild(div);
   });
 }
+
+
+function selectWho(w){
+  selWho=w;
+  const xEl=document.getElementById('who-x');
+  const pEl=document.getElementById('who-p');
+  if(xEl) xEl.className='who-opt'+(w==='xavier'?' sel-x':'');
+  if(pEl) pEl.className='who-opt'+(w==='parent'?' sel-p':'');
+}
+
+function openTodoModal(){
+  if(!isEditor){showToast('Tap 🔒 and enter password to add todos');return;}
+  document.getElementById('todo-modal-overlay').classList.add('open');
+}
+function closeTodoModal(){
+  document.getElementById('todo-modal-overlay').classList.remove('open');
+  document.getElementById('todo-input').value='';
+}
+function saveTodo(){
+  const t=document.getElementById('todo-input').value.trim();
+  if(!t)return;
+  const who=selWho||'xavier';
+  todos.unshift({text:t,who,done:false,id:Date.now()});
+  saveData();renderTodoMain();closeTodoModal();
+}
+
+// ── INIT ──
+async function init() {
+  // Load from Firebase
+  await loadData();
+  // Build UI
+  buildTypeGrid('hockey');
+  buildColorRow();
+  selectWho('xavier');
+  // Restore editor session
+  checkEditor();
+  // Render
+  renderToday();
+  renderTodoMain();
+  // Voice setup
+  if (synth) { synth.getVoices(); synth.onvoiceschanged = () => synth.getVoices(); }
+  // Auto-sync every 15 seconds
+  setInterval(async () => {
+    if (isSyncing) return;
+    try {
+      const res = await fetch(FIREBASE_URL + '/captainx.json');
+      if (res.ok) {
+        const d = await res.json();
+        if (d && d.activities && JSON.stringify(d.activities) !== JSON.stringify(activities)) {
+          activities = d.activities;
+          todos = Array.isArray(d.todos) ? d.todos : [];
+          customTypes = Array.isArray(d.customTypes) ? d.customTypes : [];
+          renderToday();
+          renderTodoMain();
+          if (document.getElementById('view-week').style.display !== 'none') renderWeek();
+          showToast('Schedule updated 🔄');
+        }
+      }
+    } catch(e) {}
+  }, 15000);
+}
+
+init();
 </script>
 </body>
 </html>
