@@ -1520,12 +1520,21 @@ function buildRec(onR,onE){
 }
 
 function setVS(s){
-  const btn=document.getElementById('xavier-voice-btn'),m=document.getElementById('v-label-main');
-  btn.className='voice-mini-btn'+(s==='listening'?' listening':s==='speaking'?' speaking':'');
-  if(s==='listening')m.textContent='Listening...';
-  else if(s==='speaking')m.textContent='Speaking...';
-  else if(s==='thinking')m.textContent='Thinking...';
-  else m.textContent='Hey Xavier!';
+  const btn=document.getElementById('xavier-voice-btn');
+  const m=document.getElementById('v-label-main');
+  const sub=document.getElementById('v-label-sub');
+  if(btn) btn.className='voice-mini'+(s==='listening'?' listening':s==='speaking'?' speaking':'');
+  if(m){
+    if(s==='listening') m.textContent='🔴 Listening...';
+    else if(s==='speaking') m.textContent='🔊 Speaking...';
+    else if(s==='thinking') m.textContent='💭 Thinking...';
+    else m.textContent='Hey Xavier, talk!';
+  }
+  if(sub){
+    if(s==='idle') sub.textContent='Tap to ask or add a to-do';
+    else if(s==='listening') sub.textContent='Speak now!';
+    else if(s==='speaking') sub.textContent='Captain X is talking...';
+  }
 }
 
 function speak(txt){
@@ -1814,6 +1823,138 @@ function saveTodo(){
   const who=selWho||'xavier';
   todos.unshift({text:t,who,done:false,id:Date.now()});
   saveData();renderTodoMain();closeTodoModal();
+}
+
+
+// ── AI CHAT & VOICE ──
+
+function buildCtx(){
+  let ctx = "You are Captain X AI, a fun helpful assistant for Xavier's schedule.\n";
+  ctx += "Xavier is an 8-year-old boy who does: Ice Hockey, Fencing, Tennis, Kumon, Mini Chef, Swimming, Russian Math.\n";
+  ctx += "Today is " + ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()] + ", " + new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}) + ".\n";
+  ctx += "Xavier's schedule:\n";
+  DAYS.forEach((d,i)=>{
+    const acts=activities.filter(a=>a.day===i);
+    if(acts.length){ ctx+=d+": "+acts.map(a=>`${a.name} at ${m2t(t2m(a.time))}${a.endTime?' to '+m2t(t2m(a.endTime)):''} at ${a.location}${a.cost>0?', $'+a.cost+'/session':''} (${a.format})`).join('; ')+"\n"; }
+  });
+  const td=todos.filter(t=>!t.done).map(t=>t.text);
+  if(td.length) ctx+="To-do list: "+td.join(', ')+"\n";
+  ctx+="Be fun, energetic and encouraging. Keep answers short (2-3 sentences max).";
+  return ctx;
+}
+
+function addMsg(text, isUser){
+  const msgs = document.getElementById('ai-messages');
+  const sugs = document.getElementById('ai-suggestions');
+  if(sugs) sugs.style.display = 'none';
+  const el = document.createElement('div');
+  el.className = 'msg msg-' + (isUser ? 'user' : 'ai');
+  el.textContent = text;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+// Smart local reply — works without any API key
+function smartLocalReply(q){
+  const t = q.toLowerCase();
+  const ti = getToday();
+  const todayActs = activities.filter(a=>a.day===ti&&a.type!=='school').sort((a,b)=>t2m(a.time)-t2m(b.time));
+  const tom = (ti+1)%7;
+  const tomActs = activities.filter(a=>a.day===tom&&a.type!=='school');
+
+  if(t.includes('today')||t.includes('what do i have')||t.includes('schedule')){
+    if(!todayActs.length) return "Xavier just has school today — easy day! 🎉";
+    return "Today Xavier has "+todayActs.map(a=>a.name+' at '+m2t(t2m(a.time))).join(' and ')+"! Let's go! 🚀";
+  }
+  if(t.includes('tomorrow')){
+    if(!tomActs.length) return "Tomorrow is a free day for Xavier! 🌟";
+    return "Tomorrow Xavier has "+tomActs.map(a=>a.name+' at '+m2t(t2m(a.time))).join(' and ')+"! 📅";
+  }
+  if(t.includes('gear')||t.includes('pack')||t.includes('bring')){
+    const gear=[...new Set(todayActs.flatMap(a=>a.gear||[]))];
+    if(!gear.length) return "Nothing special to pack today! 👍";
+    return "Pack for today: "+gear.join(', ')+"! Don't forget anything! 🎒";
+  }
+  if(t.includes('hockey')){
+    const h=activities.filter(a=>a.type==='hockey');
+    if(h.length) return "Hockey is on "+[...new Set(h.map(a=>DAYS[a.day]))].join(' and ')+"! 🏒 Let's skate!";
+    return "No hockey sessions found in the schedule.";
+  }
+  if(t.includes('fencing')){
+    const f=activities.filter(a=>a.type==='fencing');
+    if(f.length) return "Fencing is on "+[...new Set(f.map(a=>DAYS[a.day]))].join(' and ')+"! 🤺 En garde!";
+  }
+  if(t.includes('swimming')||t.includes('swim')){
+    const s=activities.filter(a=>a.type==='swimming');
+    if(s.length) return "Swimming is on "+[...new Set(s.map(a=>DAYS[a.day]))].join(' and ')+"! 🏊 Splash!";
+  }
+  if(t.includes('cost')||t.includes('spend')||t.includes('money')){
+    const total=activities.filter(a=>a.cost>0).reduce((s,a)=>s+parseFloat(a.cost),0);
+    if(total>0) return `Xavier's activities cost $${total.toFixed(2)}/week — about $${(total*4.33).toFixed(0)}/month! 💰`;
+    return "No costs set yet — add them when editing activities! 💡";
+  }
+  if(t.includes('private')||t.includes('lesson')){
+    const p=activities.filter(a=>a.format==='private');
+    if(p.length) return "Private lessons: "+p.map(a=>a.name+' on '+DAYS[a.day]).join(', ')+"! ⭐";
+    return "No private lessons in the schedule yet.";
+  }
+  if(t.includes('busy')||t.includes('week')){
+    const busy=DAYS.filter((d,i)=>activities.filter(a=>a.day===i&&a.type!=='school').length>0);
+    if(busy.length) return "Busy days this week: "+busy.join(', ')+"! 💪";
+    return "Looks like a quiet week!";
+  }
+  if(t.includes('hello')||t.includes('hi ')||t.includes('hey')){
+    return "Hey Xavier! 👋 I know your whole schedule — ask me anything! 🦸‍♂️";
+  }
+  return null;
+}
+
+async function getAIReply(q){
+  // First try smart local reply
+  const local = smartLocalReply(q);
+  if(local) return local;
+  // Fallback if API key available
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:200,
+        system: buildCtx(),
+        messages:[{role:'user',content:q}]
+      })
+    });
+    if(res.ok){
+      const data=await res.json();
+      return data.content&&data.content[0]?data.content[0].text:"I'm not sure about that one!";
+    }
+  } catch(e){}
+  return "Try asking me about today's schedule, gear to pack, costs, or any activity! 🦸‍♂️";
+}
+
+async function sendAI(){
+  const inp=document.getElementById('ai-input');
+  const q=inp.value.trim();
+  if(!q)return;
+  inp.value='';
+  addMsg(q,true);
+  // Show typing indicator
+  const msgs=document.getElementById('ai-messages');
+  const tp=document.createElement('div');
+  tp.className='msg msg-ai';
+  tp.innerHTML='<div class="typing-dots"><span></span><span></span><span></span></div>';
+  msgs.appendChild(tp);
+  msgs.scrollTop=msgs.scrollHeight;
+  const r=await getAIReply(q);
+  tp.innerHTML='';
+  tp.textContent=r;
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function askAI(q){
+  document.getElementById('ai-input').value=q;
+  sendAI();
 }
 
 // ── INIT ──
